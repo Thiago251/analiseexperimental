@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CLASSIFICADO · Risco Pandêmico Tripartite · Norovírus + Hantavírus + Ebola · 14 MAI 2026</title>
+    <title>CLASSIFICADO · Risco Pandêmico Quádruplo · Norovírus + Hantavírus + Ebola + H5N1 · 14 MAI 2026</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
@@ -32,6 +32,10 @@
             --ebola-light: #ffaa33;
             --ebola-bg: rgba(255, 140, 0, 0.06);
             --ebola-border: rgba(255, 140, 0, 0.25);
+            --h5n1: #00e5ff;
+            --h5n1-light: #66f0ff;
+            --h5n1-bg: rgba(0, 229, 255, 0.06);
+            --h5n1-border: rgba(0, 229, 255, 0.25);
             --card-bg: #111820;
             --card-hover: #161e2a;
         }
@@ -43,32 +47,24 @@
             min-height: 100vh;
             overflow-x: hidden;
         }
-
-        /* Scanline overlay */
         body::after {
             content: '';
             position: fixed;
             top: 0; left: 0; right: 0; bottom: 0;
             pointer-events: none;
             z-index: 9999;
-            background: repeating-linear-gradient(
-                0deg,
-                transparent,
-                transparent 2px,
-                rgba(0,0,0,0.03) 2px,
-                rgba(0,0,0,0.03) 4px
-            );
+            background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.03) 2px, rgba(0,0,0,0.03) 4px);
         }
 
         .header {
             background: linear-gradient(180deg, #0d1117 0%, #0a0e14 100%);
             border-bottom: 2px solid var(--border);
-            padding: 16px 28px;
+            padding: 14px 24px;
             display: flex;
             justify-content: space-between;
             align-items: center;
             flex-wrap: wrap;
-            gap: 12px;
+            gap: 10px;
             position: relative;
         }
         .header::after {
@@ -76,7 +72,7 @@
             position: absolute;
             bottom: -2px; left: 0; right: 0;
             height: 1px;
-            background: linear-gradient(90deg, transparent, var(--noro), var(--ebola), var(--hanta), transparent);
+            background: linear-gradient(90deg, transparent, var(--noro), var(--h5n1), var(--ebola), var(--hanta), transparent);
             animation: headerGlow 4s ease-in-out infinite;
         }
         @keyframes headerGlow {
@@ -85,7 +81,7 @@
         }
         .header-left h1 {
             font-family: 'Orbitron', monospace;
-            font-size: 1.05em;
+            font-size: 0.9em;
             letter-spacing: 2px;
             text-transform: uppercase;
             color: #fff;
@@ -93,66 +89,55 @@
         }
         .header-left .subtitle {
             font-family: 'Share Tech Mono', monospace;
-            font-size: 0.6em;
+            font-size: 0.55em;
             color: var(--text-secondary);
             letter-spacing: 1px;
         }
         .header-right {
             display: flex;
-            gap: 10px;
+            gap: 8px;
             align-items: center;
             flex-wrap: wrap;
         }
         .badge {
-            padding: 6px 14px;
+            padding: 5px 12px;
             border-radius: 20px;
-            font-size: 0.62em;
+            font-size: 0.58em;
             font-weight: 700;
             letter-spacing: 1px;
             display: flex;
             align-items: center;
-            gap: 6px;
+            gap: 5px;
             font-family: 'Share Tech Mono', monospace;
         }
-        .badge-noro {
-            background: rgba(46, 204, 113, 0.12);
-            border: 1px solid rgba(46, 204, 113, 0.3);
-            color: var(--noro-light);
-        }
-        .badge-hanta {
-            background: rgba(255, 68, 68, 0.12);
-            border: 1px solid rgba(255, 68, 68, 0.3);
-            color: var(--hanta-light);
-        }
-        .badge-ebola {
-            background: rgba(255, 140, 0, 0.12);
-            border: 1px solid rgba(255, 140, 0, 0.3);
-            color: var(--ebola-light);
-        }
+        .badge-noro { background: rgba(46,204,113,0.12); border: 1px solid rgba(46,204,113,0.3); color: var(--noro-light); }
+        .badge-hanta { background: rgba(255,68,68,0.12); border: 1px solid rgba(255,68,68,0.3); color: var(--hanta-light); }
+        .badge-ebola { background: rgba(255,140,0,0.12); border: 1px solid rgba(255,140,0,0.3); color: var(--ebola-light); }
+        .badge-h5n1 { background: rgba(0,229,255,0.12); border: 1px solid rgba(0,229,255,0.3); color: var(--h5n1-light); }
         .badge-alert {
-            background: rgba(255, 0, 0, 0.15);
-            border: 1px solid rgba(255, 0, 0, 0.4);
+            background: rgba(255,0,0,0.15);
+            border: 1px solid rgba(255,0,0,0.4);
             color: #ff6666;
             animation: pulse-alert 2s infinite;
         }
         @keyframes pulse-alert {
-            0%, 100% { border-color: rgba(255, 0, 0, 0.4); box-shadow: 0 0 4px rgba(255,0,0,0.1); }
-            50% { border-color: rgba(255, 0, 0, 0.8); box-shadow: 0 0 12px rgba(255,0,0,0.3); }
+            0%, 100% { border-color: rgba(255,0,0,0.4); box-shadow: 0 0 4px rgba(255,0,0,0.1); }
+            50% { border-color: rgba(255,0,0,0.8); box-shadow: 0 0 12px rgba(255,0,0,0.3); }
         }
 
         .dashboard {
             display: grid;
-            grid-template-columns: 1fr 400px;
-            gap: 16px;
-            padding: 16px 24px;
+            grid-template-columns: 1fr 380px;
+            gap: 14px;
+            padding: 14px 20px;
             max-width: 1700px;
             margin: 0 auto;
-            height: calc(100vh - 76px);
+            height: calc(100vh - 68px);
         }
         .main-panel {
             display: flex;
             flex-direction: column;
-            gap: 14px;
+            gap: 12px;
             overflow-y: auto;
             padding-right: 6px;
         }
@@ -161,14 +146,14 @@
 
         .summary-row {
             display: grid;
-            grid-template-columns: repeat(5, 1fr);
-            gap: 12px;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 10px;
         }
         .summary-card {
             background: var(--card-bg);
             border: 1px solid var(--border);
             border-radius: 12px;
-            padding: 14px 16px;
+            padding: 12px 14px;
             transition: all 0.3s;
             position: relative;
             overflow: hidden;
@@ -178,24 +163,24 @@
             transform: translateY(-2px);
             box-shadow: 0 8px 24px rgba(0,0,0,0.3);
         }
-        .summary-card .card-icon { font-size: 1.3em; margin-bottom: 6px; }
+        .summary-card .card-icon { font-size: 1.1em; margin-bottom: 4px; }
         .summary-card .card-value {
             font-family: 'Orbitron', monospace;
-            font-size: 1.6em;
+            font-size: 1.4em;
             font-weight: 800;
             letter-spacing: -1px;
             line-height: 1;
-            margin-bottom: 3px;
+            margin-bottom: 2px;
         }
         .summary-card .card-label {
-            font-size: 0.55em;
+            font-size: 0.5em;
             color: var(--text-secondary);
             letter-spacing: 1px;
             text-transform: uppercase;
         }
         .summary-card .card-trend {
-            font-size: 0.52em;
-            margin-top: 4px;
+            font-size: 0.48em;
+            margin-top: 3px;
             color: var(--text-secondary);
         }
         .summary-card::after {
@@ -208,6 +193,7 @@
         .card-noro::after { background: var(--noro); }
         .card-hanta::after { background: var(--hanta); }
         .card-ebola::after { background: var(--ebola); }
+        .card-h5n1::after { background: var(--h5n1); }
         .card-total::after { background: var(--gold); }
         .card-countries::after { background: var(--purple); }
 
@@ -215,7 +201,7 @@
             background: var(--card-bg);
             border: 1px solid var(--border);
             border-radius: 12px;
-            padding: 16px 20px;
+            padding: 14px 18px;
             transition: all 0.3s;
         }
         .chart-card:hover { border-color: #2e3d52; }
@@ -223,12 +209,12 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 12px;
+            margin-bottom: 10px;
             flex-wrap: wrap;
             gap: 6px;
         }
         .chart-card h3 {
-            font-size: 0.78em;
+            font-size: 0.7em;
             letter-spacing: 1px;
             color: #fff;
             display: flex;
@@ -237,35 +223,36 @@
             font-family: 'Orbitron', monospace;
         }
         .chart-card h3 .dot {
-            width: 8px; height: 8px;
+            width: 7px; height: 7px;
             border-radius: 50%;
             display: inline-block;
         }
         .dot-noro { background: var(--noro); box-shadow: 0 0 8px var(--noro); }
         .dot-hanta { background: var(--hanta); box-shadow: 0 0 8px var(--hanta); }
         .dot-ebola { background: var(--ebola); box-shadow: 0 0 8px var(--ebola); }
+        .dot-h5n1 { background: var(--h5n1); box-shadow: 0 0 8px var(--h5n1); }
 
-        .chart-triple {
+        .chart-quadruple {
             display: grid;
-            grid-template-columns: 1fr 1fr 1fr;
-            gap: 14px;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
         }
-        .chart-box { position: relative; height: 260px; }
-        .chart-box canvas { max-height: 260px; }
+        .chart-box { position: relative; height: 240px; }
+        .chart-box canvas { max-height: 240px; }
 
-        .risk-table { width: 100%; border-collapse: collapse; font-size: 0.68em; }
+        .risk-table { width: 100%; border-collapse: collapse; font-size: 0.65em; }
         .risk-table th {
             text-align: left;
             color: var(--text-secondary);
             font-weight: 600;
-            font-size: 0.65em;
+            font-size: 0.6em;
             letter-spacing: 1px;
-            padding: 8px 10px;
+            padding: 7px 8px;
             border-bottom: 1px solid var(--border);
             text-transform: uppercase;
         }
         .risk-table td {
-            padding: 8px 10px;
+            padding: 7px 8px;
             border-bottom: 1px solid rgba(30,42,56,0.5);
             vertical-align: middle;
         }
@@ -274,12 +261,13 @@
         .risk-table tbody tr.selected-noro { background: var(--noro-bg); border-left: 3px solid var(--noro); }
         .risk-table tbody tr.selected-hanta { background: var(--hanta-bg); border-left: 3px solid var(--hanta); }
         .risk-table tbody tr.selected-ebola { background: var(--ebola-bg); border-left: 3px solid var(--ebola); }
+        .risk-table tbody tr.selected-h5n1 { background: var(--h5n1-bg); border-left: 3px solid var(--h5n1); }
 
         .risk-level-pill {
             display: inline-block;
             padding: 3px 8px;
             border-radius: 10px;
-            font-size: 0.6em;
+            font-size: 0.58em;
             font-weight: 700;
             letter-spacing: 1px;
         }
@@ -289,8 +277,8 @@
         .pill-low { background: rgba(46,204,113,0.15); color: #2ecc71; border: 1px solid rgba(46,204,113,0.3); }
 
         .pathogen-badge {
-            font-size: 0.55em;
-            padding: 2px 7px;
+            font-size: 0.52em;
+            padding: 2px 6px;
             border-radius: 8px;
             font-weight: 700;
             letter-spacing: 1px;
@@ -299,6 +287,7 @@
         .pathogen-noro { background: rgba(46,204,113,0.15); color: #2ecc71; border: 1px solid rgba(46,204,113,0.3); }
         .pathogen-hanta { background: rgba(255,68,68,0.15); color: #ff4444; border: 1px solid rgba(255,68,68,0.3); }
         .pathogen-ebola { background: rgba(255,140,0,0.15); color: #ff8c00; border: 1px solid rgba(255,140,0,0.3); }
+        .pathogen-h5n1 { background: rgba(0,229,255,0.15); color: #00e5ff; border: 1px solid rgba(0,229,255,0.3); }
 
         .progress-bar-bg {
             width: 100%; height: 5px;
@@ -315,7 +304,7 @@
         .sidebar {
             display: flex;
             flex-direction: column;
-            gap: 10px;
+            gap: 8px;
             overflow-y: auto;
             padding-right: 4px;
         }
@@ -325,24 +314,25 @@
         .detail-panel {
             background: var(--card-bg);
             border: 1px solid var(--border);
-            border-radius: 12px;
-            padding: 14px;
+            border-radius: 10px;
+            padding: 12px;
             transition: all 0.3s;
         }
         .detail-panel.noro-panel { border-left: 3px solid var(--noro); }
         .detail-panel.hanta-panel { border-left: 3px solid var(--hanta); }
         .detail-panel.ebola-panel { border-left: 3px solid var(--ebola); }
+        .detail-panel.h5n1-panel { border-left: 3px solid var(--h5n1); }
 
         .detail-panel .panel-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 10px;
-            padding-bottom: 8px;
+            margin-bottom: 8px;
+            padding-bottom: 6px;
             border-bottom: 1px solid var(--border);
         }
         .detail-panel .panel-header h3 {
-            font-size: 0.72em;
+            font-size: 0.65em;
             letter-spacing: 1px;
             color: #fff;
             display: flex;
@@ -351,9 +341,9 @@
             font-family: 'Orbitron', monospace;
         }
         .detail-panel .panel-header .panel-badge {
-            font-size: 0.55em;
-            padding: 2px 7px;
-            border-radius: 8px;
+            font-size: 0.5em;
+            padding: 2px 6px;
+            border-radius: 6px;
             font-weight: 700;
             letter-spacing: 1px;
             font-family: 'Share Tech Mono', monospace;
@@ -361,87 +351,78 @@
         .badge-noro-sm { background: rgba(46,204,113,0.15); color: #2ecc71; border: 1px solid rgba(46,204,113,0.3); }
         .badge-hanta-sm { background: rgba(255,68,68,0.15); color: #ff4444; border: 1px solid rgba(255,68,68,0.3); }
         .badge-ebola-sm { background: rgba(255,140,0,0.15); color: #ff8c00; border: 1px solid rgba(255,140,0,0.3); }
+        .badge-h5n1-sm { background: rgba(0,229,255,0.15); color: #00e5ff; border: 1px solid rgba(0,229,255,0.3); }
 
-        .detail-content h4 { color: #fff; font-size: 0.75em; margin-bottom: 5px; }
+        .detail-content h4 { color: #fff; font-size: 0.7em; margin-bottom: 4px; }
         .detail-content .detail-stat {
             display: flex;
             justify-content: space-between;
-            padding: 4px 0;
+            padding: 3px 0;
             border-bottom: 1px solid rgba(30,42,56,0.3);
-            font-size: 0.6em;
+            font-size: 0.55em;
         }
         .detail-content .detail-stat .stat-label { color: var(--text-secondary); }
         .detail-content .detail-stat .stat-value { font-weight: 600; color: #fff; }
         .detail-content .event-desc {
-            margin-top: 6px;
-            font-size: 0.58em;
+            margin-top: 5px;
+            font-size: 0.52em;
             color: #b0bec5;
             line-height: 1.5;
-            padding: 6px 8px;
+            padding: 5px 7px;
             background: rgba(255,255,255,0.02);
             border-radius: 6px;
         }
         .detail-content .factors {
             display: flex;
             flex-wrap: wrap;
-            gap: 4px;
-            margin-top: 6px;
+            gap: 3px;
+            margin-top: 5px;
         }
         .factor-tag {
-            font-size: 0.52em;
-            padding: 2px 6px;
-            border-radius: 5px;
+            font-size: 0.48em;
+            padding: 2px 5px;
+            border-radius: 4px;
             border: 1px solid var(--border);
             background: rgba(255,255,255,0.02);
             color: var(--text-secondary);
         }
         .placeholder-text {
-            font-size: 0.6em;
+            font-size: 0.55em;
             color: #5a6e8a;
             text-align: center;
-            padding: 16px 8px;
+            padding: 12px 6px;
             font-style: italic;
         }
         .note {
-            font-size: 0.5em;
+            font-size: 0.46em;
             color: #5a6e8a;
             text-align: center;
             font-style: italic;
             line-height: 1.5;
-            padding: 6px;
+            padding: 5px;
             background: rgba(255,255,255,0.01);
-            border-radius: 8px;
+            border-radius: 6px;
         }
-        .alert-mini {
-            background: rgba(255,0,0,0.06);
-            border: 1px solid rgba(255,0,0,0.2);
-            border-radius: 8px;
-            padding: 8px 10px;
-            font-size: 0.55em;
-            color: #ff9999;
-            text-align: center;
-            font-family: 'Share Tech Mono', monospace;
-        }
-        .triple-alert {
-            background: linear-gradient(135deg, rgba(255,68,68,0.08), rgba(255,140,0,0.08), rgba(46,204,113,0.08));
+        .quad-alert {
+            background: linear-gradient(135deg, rgba(46,204,113,0.06), rgba(0,229,255,0.06), rgba(255,140,0,0.06), rgba(255,68,68,0.06));
             border: 1px solid rgba(255,100,50,0.3);
             border-radius: 8px;
-            padding: 8px 10px;
-            font-size: 0.55em;
-            color: #ffccaa;
+            padding: 7px 10px;
+            font-size: 0.5em;
+            color: #ffeedd;
             text-align: center;
             font-family: 'Share Tech Mono', monospace;
         }
 
         .stamp {
             position: fixed;
-            bottom: 20px;
-            right: 20px;
-            border: 3px solid rgba(255,0,0,0.15);
-            color: rgba(255,0,0,0.15);
-            padding: 8px 16px;
+            bottom: 16px;
+            right: 16px;
+            border: 3px solid rgba(0,229,255,0.12);
+            color: rgba(0,229,255,0.12);
+            padding: 6px 14px;
             font-family: 'Orbitron', monospace;
-            font-size: 0.7em;
+            font-size: 0.65em;
             letter-spacing: 3px;
             transform: rotate(-12deg);
             pointer-events: none;
@@ -450,34 +431,33 @@
         }
 
         @media (max-width: 1200px) {
-            .summary-row { grid-template-columns: repeat(3, 1fr); }
-            .chart-triple { grid-template-columns: 1fr; }
+            .chart-quadruple { grid-template-columns: 1fr; }
             .dashboard { grid-template-columns: 1fr; height: auto; }
         }
         @media (max-width: 700px) {
             .summary-row { grid-template-columns: 1fr 1fr; }
-            .header { padding: 12px 14px; }
-            .header-left h1 { font-size: 0.8em; }
+            .header { padding: 10px 12px; }
+            .header-left h1 { font-size: 0.7em; }
         }
     </style>
 </head>
 <body>
     <div class="header">
         <div class="header-left">
-            <h1>ANALISE DE RISCO PANDEMICO · TRIPARTITE</h1>
-            <div class="subtitle">Norovirus (GII.4) + Hantavirus (ANDV) + Ebola (EBOV/Zaire) · Painel Combinado · 14 MAI 2026 · Dr/Obscuros</div>
+            <h1>ANALISE DE RISCO PANDEMICO · QUADRUPLO</h1>
+            <div class="subtitle">Norovirus (GII.4) + Hantavirus (ANDV) + Ebola (EBOV) + Influenza A(H5N1) · 14 MAI 2026 · Dr/Obscuros</div>
         </div>
         <div class="header-right">
             <div class="badge badge-noro"><i class="fas fa-virus"></i> NORO</div>
             <div class="badge badge-hanta"><i class="fas fa-lungs"></i> HANTA</div>
             <div class="badge badge-ebola"><i class="fas fa-biohazard"></i> EBOLA</div>
-            <div class="badge badge-alert"><i class="fas fa-triangle-exclamation"></i> ALERTA TRIPLO</div>
+            <div class="badge badge-h5n1"><i class="fas fa-crow"></i> H5N1</div>
+            <div class="badge badge-alert"><i class="fas fa-triangle-exclamation"></i> ALERTA QUADRUPLO</div>
         </div>
     </div>
 
     <div class="dashboard">
         <div class="main-panel">
-            <!-- Summary Cards -->
             <div class="summary-row">
                 <div class="summary-card card-noro">
                     <div class="card-icon"><i class="fas fa-virus" style="color:var(--noro);"></i></div>
@@ -497,56 +477,61 @@
                     <div class="card-label">Risco Medio Ebola</div>
                     <div class="card-trend"><i class="fas fa-arrow-up"></i> +47% em 7 dias</div>
                 </div>
+                <div class="summary-card card-h5n1">
+                    <div class="card-icon"><i class="fas fa-crow" style="color:var(--h5n1);"></i></div>
+                    <div class="card-value" style="color: var(--h5n1);" id="h5n1AvgRisk">--</div>
+                    <div class="card-label">Risco Medio H5N1</div>
+                    <div class="card-trend"><i class="fas fa-arrow-up"></i> +85% em 7 dias</div>
+                </div>
                 <div class="summary-card card-total">
                     <div class="card-icon"><i class="fas fa-chart-line" style="color:var(--gold);"></i></div>
                     <div class="card-value" style="color: var(--gold);" id="totalCases">--</div>
                     <div class="card-label">Casos Ativos Totais</div>
-                    <div class="card-trend"><i class="fas fa-arrow-up"></i> +62% em 10 dias</div>
+                    <div class="card-trend"><i class="fas fa-arrow-up"></i> +91% em 10 dias</div>
                 </div>
                 <div class="summary-card card-countries">
                     <div class="card-icon"><i class="fas fa-globe" style="color:var(--purple);"></i></div>
-                    <div class="card-value" style="color: var(--purple);">23</div>
+                    <div class="card-value" style="color: var(--purple);">31</div>
                     <div class="card-label">Paises Monitorados</div>
-                    <div class="card-trend"><i class="fas fa-plus"></i> +6 novos focos</div>
+                    <div class="card-trend"><i class="fas fa-plus"></i> +9 novos focos</div>
                 </div>
             </div>
 
-            <!-- Triple Charts -->
-            <div class="chart-triple">
+            <div class="chart-quadruple">
                 <div class="chart-card">
                     <div class="chart-header">
                         <h3><span class="dot dot-noro"></span> NORO · Prob. Pandemia</h3>
                         <span class="pathogen-badge pathogen-noro">GII.4</span>
                     </div>
-                    <div class="chart-box">
-                        <canvas id="noroChart"></canvas>
-                    </div>
+                    <div class="chart-box"><canvas id="noroChart"></canvas></div>
                 </div>
                 <div class="chart-card">
                     <div class="chart-header">
                         <h3><span class="dot dot-hanta"></span> HANTA · Prob. Pandemia</h3>
                         <span class="pathogen-badge pathogen-hanta">ANDV</span>
                     </div>
-                    <div class="chart-box">
-                        <canvas id="hantaChart"></canvas>
-                    </div>
+                    <div class="chart-box"><canvas id="hantaChart"></canvas></div>
                 </div>
                 <div class="chart-card">
                     <div class="chart-header">
                         <h3><span class="dot dot-ebola"></span> EBOLA · Prob. Pandemia</h3>
                         <span class="pathogen-badge pathogen-ebola">EBOV</span>
                     </div>
-                    <div class="chart-box">
-                        <canvas id="ebolaChart"></canvas>
+                    <div class="chart-box"><canvas id="ebolaChart"></canvas></div>
+                </div>
+                <div class="chart-card">
+                    <div class="chart-header">
+                        <h3><span class="dot dot-h5n1"></span> H5N1 · Prob. Pandemia</h3>
+                        <span class="pathogen-badge pathogen-h5n1">HPAI</span>
                     </div>
+                    <div class="chart-box"><canvas id="h5n1Chart"></canvas></div>
                 </div>
             </div>
 
-            <!-- Top Risk Table -->
             <div class="chart-card">
                 <div class="chart-header">
                     <h3><i class="fas fa-ranking-star" style="color:var(--gold);"></i> RANKING DE RISCO PANDEMICO · Todos os Eventos</h3>
-                    <span style="font-size:0.55em;color:var(--text-secondary);">Clique para detalhes nos paineis</span>
+                    <span style="font-size:0.5em;color:var(--text-secondary);">Clique para detalhes nos paineis</span>
                 </div>
                 <div style="overflow-x: auto;">
                     <table class="risk-table">
@@ -566,59 +551,64 @@
                 </div>
             </div>
 
-            <!-- Radar Chart -->
             <div class="chart-card">
                 <div class="chart-header">
-                    <h3><i class="fas fa-crosshairs" style="color:var(--accent);"></i> Comparacao de Perfis de Risco · Tripartite</h3>
-                    <span style="font-size:0.55em;color:var(--text-secondary);">Selecione eventos na tabela acima</span>
+                    <h3><i class="fas fa-crosshairs" style="color:var(--accent);"></i> Comparacao de Perfis de Risco · Quadruplo</h3>
+                    <span style="font-size:0.5em;color:var(--text-secondary);">Selecione eventos na tabela acima</span>
                 </div>
-                <div class="chart-box" style="height: 300px;">
+                <div class="chart-box" style="height: 320px;">
                     <canvas id="radarChart"></canvas>
                 </div>
             </div>
         </div>
 
-        <!-- SIDEBAR -->
         <div class="sidebar" id="sidebar">
-            <div class="triple-alert">
-                <i class="fas fa-triangle-exclamation"></i> ALERTA TRIPLO: Resistencia a hipoclorito (NORO), dispersao multicontinental (HANTA), e transmissao urbana descontrolada (EBOLA) confirmadas.
+            <div class="quad-alert">
+                <i class="fas fa-triangle-exclamation"></i> ALERTA QUADRUPLO: Resistencia (NORO), dispersao multicontinental (HANTA), transmissao urbana (EBOLA), e reassortimento mammaliano (H5N1) confirmados.
             </div>
 
-            <!-- Card Norovirus -->
             <div class="detail-panel noro-panel" id="noroPanel">
                 <div class="panel-header">
                     <h3><i class="fas fa-virus" style="color:var(--noro);"></i> NOROVIRUS</h3>
                     <span class="panel-badge badge-noro-sm">GII.4</span>
                 </div>
                 <div class="detail-content" id="noroDetailContent">
-                    <div class="placeholder-text">Clique em um evento de <strong style="color:#2ecc71;">Norovirus</strong> na tabela para ver os detalhes.</div>
+                    <div class="placeholder-text">Clique em um evento de <strong style="color:#2ecc71;">Norovirus</strong> na tabela.</div>
                 </div>
             </div>
 
-            <!-- Card Hantavirus -->
             <div class="detail-panel hanta-panel" id="hantaPanel">
                 <div class="panel-header">
                     <h3><i class="fas fa-lungs" style="color:var(--hanta);"></i> HANTAVIRUS</h3>
                     <span class="panel-badge badge-hanta-sm">ANDV/SEOV</span>
                 </div>
                 <div class="detail-content" id="hantaDetailContent">
-                    <div class="placeholder-text">Clique em um evento de <strong style="color:#ff4444;">Hantavirus</strong> na tabela para ver os detalhes.</div>
+                    <div class="placeholder-text">Clique em um evento de <strong style="color:#ff4444;">Hantavirus</strong> na tabela.</div>
                 </div>
             </div>
 
-            <!-- Card Ebola -->
             <div class="detail-panel ebola-panel" id="ebolaPanel">
                 <div class="panel-header">
                     <h3><i class="fas fa-biohazard" style="color:var(--ebola);"></i> EBOLA</h3>
-                    <span class="panel-badge badge-ebola-sm">EBOV/Zaire</span>
+                    <span class="panel-badge badge-ebola-sm">EBOV/SUDV</span>
                 </div>
                 <div class="detail-content" id="ebolaDetailContent">
-                    <div class="placeholder-text">Clique em um evento de <strong style="color:#ff8c00;">Ebola</strong> na tabela para ver os detalhes.</div>
+                    <div class="placeholder-text">Clique em um evento de <strong style="color:#ff8c00;">Ebola</strong> na tabela.</div>
+                </div>
+            </div>
+
+            <div class="detail-panel h5n1-panel" id="h5n1Panel">
+                <div class="panel-header">
+                    <h3><i class="fas fa-crow" style="color:var(--h5n1);"></i> INFLUENZA H5N1</h3>
+                    <span class="panel-badge badge-h5n1-sm">HPAI</span>
+                </div>
+                <div class="detail-content" id="h5n1DetailContent">
+                    <div class="placeholder-text">Clique em um evento de <strong style="color:#00e5ff;">H5N1</strong> na tabela.</div>
                 </div>
             </div>
 
             <div class="note">
-                PROBABILIDADES HIPOTETICAS baseadas em modelo multi-fatorial Dr/Obscuros v3.2.<br>
+                PROBABILIDADES HIPOTETICAS · Modelo multi-fatorial Dr/Obscuros v4.0.<br>
                 Classificacao: SIGMA · Atualizacao: 14/05/2026 23:45 UTC
             </div>
         </div>
@@ -631,122 +621,100 @@
         const noroEvents = [
             { name: 'Caribbean Princess (Atlantico)', icon: '<i class="fas fa-ship"></i>', pathogen: 'noro',
                 factors: { transmissibilidade: 0.99, cfr: 0.011, conectividade: 0.85, contencao: 0.25, reservatorio: 0.05, mutacoes: 0.82, doseInfectante: 0.98, incubacaoAssint: 0.85 },
-                color: '#2ecc71',
                 desc: '187 infectados, 2 obitos. Resistencia a hipoclorito confirmada. Cepa GII.4 recombinante com escape de desinfeccao padrao. Ambiente confinado com R0 > 12.',
                 casos: '187 (2 obitos)' },
             { name: 'Japao (Toquio)', icon: '<i class="fas fa-torii-gate"></i>', pathogen: 'noro',
                 factors: { transmissibilidade: 0.92, cfr: 0.002, conectividade: 0.92, contencao: 0.55, reservatorio: 0.05, mutacoes: 0.72, doseInfectante: 0.95, incubacaoAssint: 0.82 },
-                color: '#2ecc71',
-                desc: '1.850 casos, 3 obitos infantis. Aceleracao de 45% em 10 dias. Escolas fechando. Transmissao em metro e ambientes fechados.',
+                desc: '1.850 casos, 3 obitos infantis. Aceleracao de 45% em 10 dias. Escolas fechando.',
                 casos: '1.850 (3 obitos)' },
             { name: 'Reino Unido (Londres)', icon: '<i class="fas fa-landmark"></i>', pathogen: 'noro',
                 factors: { transmissibilidade: 0.90, cfr: 0.006, conectividade: 0.88, contencao: 0.45, reservatorio: 0.05, mutacoes: 0.68, doseInfectante: 0.95, incubacaoAssint: 0.82 },
-                color: '#2ecc71',
-                desc: '1.340 casos, 8 obitos. UKHSA declara incidente grave. Pico de inverno tardio. Surtos em escolas e metro.',
+                desc: '1.340 casos, 8 obitos. UKHSA declara incidente grave. Pico de inverno tardio.',
                 casos: '1.340 (8 obitos)' },
-            { name: 'EUA (Nova York)', icon: '<i class="fas fa-statue-of-liberty"></i>', pathogen: 'noro',
+            { name: 'EUA (Nova York)', icon: '<i class="fas fa-building"></i>', pathogen: 'noro',
                 factors: { transmissibilidade: 0.88, cfr: 0.010, conectividade: 0.82, contencao: 0.50, reservatorio: 0.05, mutacoes: 0.65, doseInfectante: 0.95, incubacaoAssint: 0.80 },
-                color: '#2ecc71',
-                desc: '590 casos, 6 obitos em lares de idosos. CDC revisa protocolo de alcool gel. Recomendacao de hipoclorito concentrado.',
+                desc: '590 casos, 6 obitos em lares de idosos. CDC revisa protocolo de alcool gel.',
                 casos: '590 (6 obitos)' },
-            { name: 'Australia (Sydney)', icon: '<i class="fas fa-umbrella-beach"></i>', pathogen: 'noro',
-                factors: { transmissibilidade: 0.85, cfr: 0.004, conectividade: 0.65, contencao: 0.55, reservatorio: 0.05, mutacoes: 0.60, doseInfectante: 0.95, incubacaoAssint: 0.78 },
-                color: '#2ecc71',
-                desc: '520 casos, 2 obitos. Expansao para resorts e escolas. NSW Health em alerta maximo.',
-                casos: '520 (2 obitos)' },
             { name: 'India (Mumbai)', icon: '<i class="fas fa-om"></i>', pathogen: 'noro',
                 factors: { transmissibilidade: 0.78, cfr: 0.001, conectividade: 0.55, contencao: 0.25, reservatorio: 0.10, mutacoes: 0.55, doseInfectante: 0.90, incubacaoAssint: 0.75 },
-                color: '#2ecc71',
-                desc: 'Estimados 35.000 casos, 28 obitos infantis. Subnotificacao cronica. Cepa GII.4 recombinante em areas de saneamento precario.',
-                casos: '~35.000 (28 obitos)' },
-            { name: 'Russia (Moscou)', icon: '<i class="fas fa-star-and-crescent"></i>', pathogen: 'noro',
-                factors: { transmissibilidade: 0.80, cfr: 0.004, conectividade: 0.55, contencao: 0.35, reservatorio: 0.05, mutacoes: 0.58, doseInfectante: 0.90, incubacaoAssint: 0.75 },
-                color: '#2ecc71',
-                desc: 'Surtos em abrigos e metro. Casos dobrando a cada 2 semanas. Rospotrebnadzor implementa desinfeccao com cloro.',
-                casos: '~1.200 (4 obitos)' }
+                desc: 'Estimados 35.000 casos, 28 obitos infantis. Subnotificacao cronica.',
+                casos: '~35.000 (28 obitos)' }
         ];
 
         // ==================== DADOS HANTAVIRUS ====================
         const hantaEvents = [
             { name: 'MV Hondius (Crise Global)', icon: '<i class="fas fa-triangle-exclamation"></i>', pathogen: 'hanta',
                 factors: { transmissibilidade: 0.55, cfr: 0.42, conectividade: 0.99, contencao: 0.05, reservatorio: 0.20, mutacoes: 0.35, doseInfectante: 0.70, incubacaoAssint: 0.60 },
-                color: '#ff0000',
-                desc: 'CRISE GLOBAL. Casos confirmados na Franca, Reino Unido, Espanha, Suica e EUA. Transmissao local confirmada. Contencao falhou em multiplos continentes.',
+                desc: 'CRISE GLOBAL. Casos em 5 paises. Transmissao local confirmada. Contencao falhou.',
                 casos: '27 (9 obitos)' },
-            { name: 'Franca (Paris)', icon: '<i class="fas fa-tower-observation"></i>', pathogen: 'hanta',
-                factors: { transmissibilidade: 0.50, cfr: 0.38, conectividade: 0.95, contencao: 0.40, reservatorio: 0.05, mutacoes: 0.25, doseInfectante: 0.65, incubacaoAssint: 0.55 },
-                color: '#ff4444',
-                desc: '2 casos confirmados em Paris. Transmissao local nao contida. Aeroporto CDG e hub global. Risco de dispersao para ex-colonias.',
-                casos: '2 (0 obitos)' },
-            { name: 'Reino Unido (Londres)', icon: '<i class="fas fa-landmark"></i>', pathogen: 'hanta',
-                factors: { transmissibilidade: 0.50, cfr: 0.38, conectividade: 0.92, contencao: 0.45, reservatorio: 0.05, mutacoes: 0.25, doseInfectante: 0.65, incubacaoAssint: 0.55 },
-                color: '#ff4444',
-                desc: '1 caso confirmado em Londres. Novo ponto de ignicao fora da UE. Conexoes com Commonwealth aumentam risco de dispersao global.',
-                casos: '1 (0 obitos)' },
             { name: 'Espanha (Tenerife)', icon: '<i class="fas fa-sun"></i>', pathogen: 'hanta',
                 factors: { transmissibilidade: 0.55, cfr: 0.42, conectividade: 0.85, contencao: 0.30, reservatorio: 0.10, mutacoes: 0.28, doseInfectante: 0.65, incubacaoAssint: 0.55 },
-                color: '#ff4444',
-                desc: '12 casos, 4 obitos. Suspeita de transmissao hospitalar. Centenas em quarentena. Sistema de saude sob pressao.',
+                desc: '12 casos, 4 obitos. Suspeita de transmissao hospitalar. Centenas em quarentena.',
                 casos: '12 (4 obitos)' },
-            { name: 'EUA (Nebraska)', icon: '<i class="fas fa-wheat-awn"></i>', pathogen: 'hanta',
-                factors: { transmissibilidade: 0.48, cfr: 0.36, conectividade: 0.82, contencao: 0.55, reservatorio: 0.08, mutacoes: 0.22, doseInfectante: 0.60, incubacaoAssint: 0.52 },
-                color: '#ff4444',
-                desc: '3 casos, 1 obito. Transmissao secundaria confirmada em solo americano. CDC elevou alerta para Nivel 2.',
-                casos: '3 (1 obito)' },
             { name: 'Argentina (Nacional)', icon: '<i class="fas fa-mountain-sun"></i>', pathogen: 'hanta',
                 factors: { transmissibilidade: 0.40, cfr: 0.34, conectividade: 0.55, contencao: 0.40, reservatorio: 0.25, mutacoes: 0.20, doseInfectante: 0.55, incubacaoAssint: 0.50 },
-                color: '#e63946',
-                desc: '58 casos, 20 obitos. Foco endemico. Origem da cepa que se espalhou globalmente. Transmissao sustentada em Salta e Chubut.',
+                desc: '58 casos, 20 obitos. Foco endemico. Origem da cepa global.',
                 casos: '58 (20 obitos)' },
-            { name: 'Taiwan (Taipei)', icon: '<i class="fas fa-building"></i>', pathogen: 'hanta',
-                factors: { transmissibilidade: 0.05, cfr: 0.50, conectividade: 0.75, contencao: 0.85, reservatorio: 0.65, mutacoes: 0.08, doseInfectante: 0.30, incubacaoAssint: 0.25 },
-                color: '#a29bfe',
-                desc: '2 casos de SEOV (cepa Seoul). Sem relacao com o surto de ANDV. Excelente contencao. Transmissao por ratos urbanos.',
-                casos: '2 (1 obito)' }
+            { name: 'EUA (Nebraska)', icon: '<i class="fas fa-wheat-awn"></i>', pathogen: 'hanta',
+                factors: { transmissibilidade: 0.48, cfr: 0.36, conectividade: 0.82, contencao: 0.55, reservatorio: 0.08, mutacoes: 0.22, doseInfectante: 0.60, incubacaoAssint: 0.52 },
+                desc: '3 casos, 1 obito. Transmissao secundaria confirmada em solo americano.',
+                casos: '3 (1 obito)' }
         ];
 
         // ==================== DADOS EBOLA ====================
         const ebolaEvents = [
             { name: 'RD Congo (Nord-Kivu)', icon: '<i class="fas fa-skull-crossbones"></i>', pathogen: 'ebola',
                 factors: { transmissibilidade: 0.52, cfr: 0.67, conectividade: 0.45, contencao: 0.10, reservatorio: 0.85, mutacoes: 0.38, doseInfectante: 0.75, incubacaoAssint: 0.45 },
-                color: '#ff8c00',
-                desc: 'CRISE EM CURSO. 312 casos confirmados, 209 obitos (CFR 67%). Cepa EBOV/Zaire com mutacao GP-A82V associada a aumento de infectividade. Zona de conflito armado impede rastreamento. Transmissao urbana em Goma (2M habitantes).',
+                desc: 'CRISE EM CURSO. 312 casos, 209 obitos (CFR 67%). Mutacao GP-A82V. Zona de conflito armado.',
                 casos: '312 (209 obitos)' },
             { name: 'Uganda (Kampala)', icon: '<i class="fas fa-circle-radiation"></i>', pathogen: 'ebola',
                 factors: { transmissibilidade: 0.48, cfr: 0.55, conectividade: 0.60, contencao: 0.20, reservatorio: 0.70, mutacoes: 0.32, doseInfectante: 0.72, incubacaoAssint: 0.42 },
-                color: '#ff6600',
-                desc: 'CRISE REGIONAL. 87 casos, 48 obitos. Cepa Sudan (SUDV) sem vacina aprovada. Transmissao em centro de saude de Kampala. Enterramentos tradicionais amplificando transmissao. OMS declarou emergencia de saude publica.',
+                desc: '87 casos, 48 obitos. Cepa Sudan (SUDV) sem vacina aprovada. OMS declarou emergencia.',
                 casos: '87 (48 obitos)' },
             { name: 'Guine (Conakry)', icon: '<i class="fas fa-virus"></i>', pathogen: 'ebola',
                 factors: { transmissibilidade: 0.42, cfr: 0.60, conectividade: 0.50, contencao: 0.18, reservatorio: 0.80, mutacoes: 0.28, doseInfectante: 0.68, incubacaoAssint: 0.40 },
-                color: '#ff8c00',
-                desc: '24 casos, 14 obitos. Ressurgencia da cepa Zaire. Mesma regiao do surto de 2013-2016. Populacao com fadiga de vigilancia. Fronteiras com Liberia e Serra Leoa sem controle efetivo.',
+                desc: '24 casos, 14 obitos. Ressurgencia da cepa Zaire. Fronteiras sem controle.',
                 casos: '24 (14 obitos)' },
-            { name: 'Serra Leoa (Freetown)', icon: '<i class="fas fa-house-crack"></i>', pathogen: 'ebola',
-                factors: { transmissibilidade: 0.40, cfr: 0.58, conectividade: 0.42, contencao: 0.22, reservatorio: 0.75, mutacoes: 0.22, doseInfectante: 0.65, incubacaoAssint: 0.38 },
-                color: '#e07000',
-                desc: '11 casos suspeitos, 6 confirmados, 4 obitos. Investigacao epidemiologica em andamento. Possivel link com surto da Guine. Sistema de saude fragilizado.',
-                casos: '11 (4 obitos)' },
             { name: 'Quenia (Nairobi)', icon: '<i class="fas fa-plane-departure"></i>', pathogen: 'ebola',
                 factors: { transmissibilidade: 0.35, cfr: 0.50, conectividade: 0.78, contencao: 0.45, reservatorio: 0.60, mutacoes: 0.15, doseInfectante: 0.60, incubacaoAssint: 0.35 },
-                color: '#cc7000',
-                desc: '3 casos importados do Uganda, 1 obito. Aeroporto JKIA e hub da Africa Oriental. Risco de dispersao para Tanzania, Etiopia e Somalia. Contencao ativa mas subnotificacao possivel.',
-                casos: '3 (1 obito)' },
-            { name: 'Gana (Accra)', icon: '<i class="fas fa-shield-virus"></i>', pathogen: 'ebola',
-                factors: { transmissibilidade: 0.25, cfr: 0.45, conectividade: 0.65, contencao: 0.55, reservatorio: 0.55, mutacoes: 0.12, doseInfectante: 0.55, incubacaoAssint: 0.30 },
-                color: '#bb7000',
-                desc: '1 caso importado confirmado, em isolamento. Aeroporto de Kotoka com triagem termica ativa. Nenhuma transmissao local detectada. Vigilancia reforcada.',
-                casos: '1 (0 obitos)' },
-            { name: 'Africa do Sul (Joanesburgo)', icon: '<i class="fas fa-hospital"></i>', pathogen: 'ebola',
-                factors: { transmissibilidade: 0.20, cfr: 0.50, conectividade: 0.72, contencao: 0.65, reservatorio: 0.40, mutacoes: 0.10, doseInfectante: 0.50, incubacaoAssint: 0.28 },
-                color: '#aa6600',
-                desc: 'Nenhum caso confirmado. Monitoramento de viajantes de alto risco. NICD em alerta maximo. Capacidade laboratorial robusta.',
-                casos: '0 (vigilancia)' },
-            { name: 'EUROPA - Alemanha (Berlim)', icon: '<i class="fas fa-plane-arrival"></i>', pathogen: 'ebola',
-                factors: { transmissibilidade: 0.15, cfr: 0.40, conectividade: 0.92, contencao: 0.80, reservatorio: 0.05, mutacoes: 0.08, doseInfectante: 0.45, incubacaoAssint: 0.25 },
-                color: '#997700',
-                desc: '1 caso importado em evacuacao medica do RD Congo. Paciente em isolamento BSL-4 no Charite. Nenhuma transmissao secundaria. Protocolo de evacuacao funcionando.',
-                casos: '1 (0 obitos)' }
+                desc: '3 casos importados do Uganda. Aeroporto JKIA e hub da Africa Oriental.',
+                casos: '3 (1 obito)' }
+        ];
+
+        // ==================== DADOS H5N1 ====================
+        const h5n1Events = [
+            { name: 'Rotas Migratorias (Global)', icon: '<i class="fas fa-route"></i>', pathogen: 'h5n1',
+                factors: { transmissibilidade: 0.82, cfr: 0.52, conectividade: 0.99, contencao: 0.02, reservatorio: 0.98, mutacoes: 0.78, doseInfectante: 0.85, incubacaoAssint: 0.55 },
+                desc: 'RISCO SISTEMICO CRITICO. Dispersao incontrolavel por rotas de migracao de aves (Flyways). Reassortimento continuo com subtipos H1N1 e H3N2 em reservatorios de suinos. O reservatorio e planetario e incontido.',
+                casos: 'N/A (Fauna)' },
+            { name: 'EUA (Focos Bovinos - TX/MI)', icon: '<i class="fas fa-cow"></i>', pathogen: 'h5n1',
+                factors: { transmissibilidade: 0.35, cfr: 0.52, conectividade: 0.92, contencao: 0.35, reservatorio: 0.95, mutacoes: 0.72, doseInfectante: 0.68, incubacaoAssint: 0.38 },
+                desc: 'Salto de aves para bovinos confirmado. 48 trabalhadores infectados, 3 obitos. Mutacao PB2-E627K detectada, aumenta replicacao em mamiferos. Risco de reassortimento com influenza humana sazonal em granjas mistas.',
+                casos: '48 (3 obitos)' },
+            { name: 'China (Guangdong)', icon: '<i class="fas fa-store"></i>', pathogen: 'h5n1',
+                factors: { transmissibilidade: 0.40, cfr: 0.45, conectividade: 0.95, contencao: 0.30, reservatorio: 0.88, mutacoes: 0.75, doseInfectante: 0.72, incubacaoAssint: 0.42 },
+                desc: 'Cluster familiar em mercado vivo. Suspeita de transmissao limitada humano-a-humano. Cepa clade 2.3.4.4b com mutacao Q226L que favorece ligacao a receptores alfa-2,6 na via aerea superior humana.',
+                casos: '15 (6 obitos)' },
+            { name: 'Peru (Costa Pacifica)', icon: '<i class="fas fa-fish"></i>', pathogen: 'h5n1',
+                factors: { transmissibilidade: 0.22, cfr: 0.55, conectividade: 0.55, contencao: 0.40, reservatorio: 0.92, mutacoes: 0.60, doseInfectante: 0.62, incubacaoAssint: 0.35 },
+                desc: 'Mortandade massiva de leoes marinhos e pelicanos. Trabalhadores de pesca infectados. Mutacao D701N na PB2 detectada. Contato prolongado com fauna marinha infectada.',
+                casos: '8 (4 obitos)' },
+            { name: 'Vietna (Delta Mekong)', icon: '<i class="fas fa-dove"></i>', pathogen: 'h5n1',
+                factors: { transmissibilidade: 0.30, cfr: 0.50, conectividade: 0.60, contencao: 0.25, reservatorio: 0.95, mutacoes: 0.65, doseInfectante: 0.65, incubacaoAssint: 0.35 },
+                desc: 'Reassortimento H5N1 com H9N2 detectado em granjas de patos. Alta patogenicidade mantida em modelos ferret. Subnotificacao severa em areas rurais.',
+                casos: '22 (11 obitos)' },
+            { name: 'Egito (Vale do Nilo)', icon: '<i class="fas fa-wind"></i>', pathogen: 'h5n1',
+                factors: { transmissibilidade: 0.25, cfr: 0.42, conectividade: 0.50, contencao: 0.40, reservatorio: 0.80, mutacoes: 0.50, doseInfectante: 0.58, incubacaoAssint: 0.30 },
+                desc: 'Foco historico de H5N1. Casos esporadicos em criadores de aves. Mutacao N158D que facilita ligacao a celulas humanas detectada em amostras clinicas.',
+                casos: '5 (2 obitos)' },
+            { name: 'Reino Unido (Scotland)', icon: '<i class="fas fa-feather"></i>', pathogen: 'h5n1',
+                factors: { transmissibilidade: 0.15, cfr: 0.50, conectividade: 0.85, contencao: 0.70, reservatorio: 0.82, mutacoes: 0.35, doseInfectante: 0.50, incubacaoAssint: 0.25 },
+                desc: 'Infeccao em trabalhador de santuario de aves. Colapso de colonias de skua e gannet. Vigilancia genetica rigorosa. Nenhuma transmissao humano-humano.',
+                casos: '2 (1 obito)' },
+            { name: 'Espanha (Asturias - Furões)', icon: '<i class="fas fa-paw"></i>', pathogen: 'h5n1',
+                factors: { transmissibilidade: 0.38, cfr: 0.35, conectividade: 0.80, contencao: 0.50, reservatorio: 0.75, mutacoes: 0.55, doseInfectante: 0.60, incubacaoAssint: 0.40 },
+                desc: 'Surto em criacao de furões. Transmissao mamifero-mamifero confirmada pela OIE. Mutacao T271A na PB2. Primeira evidencia de adaptacao sustentada em mamiferos carnivores na Europa.',
+                casos: '0 (0 obitos humanos)' }
         ];
 
         // ==================== MODELO MATEMATICO ====================
@@ -757,13 +725,12 @@
         };
 
         function calcularProbabilidade(factors, pathogen) {
-            /* Modelo logistico ponderado com ajuste patogeno-especifico */
             let cfrAdjusted;
             if (pathogen === 'noro') {
                 cfrAdjusted = factors.cfr * 0.1;
-            } else if (pathogen === 'ebola') {
-                /* Ebola: CFR alto mas limita dispersao; sweet spot em CFR moderado */
-                cfrAdjusted = factors.cfr > 0.6 ? (1 - factors.cfr) * 0.5 : factors.cfr * 0.3;
+            } else if (pathogen === 'ebola' || pathogen === 'h5n1') {
+                /* CFR alto penaliza dispersao inicial, mas H5N1 tem CFR que ameaca gravemente */
+                cfrAdjusted = factors.cfr > 0.6 ? (1 - factors.cfr) * 0.4 : factors.cfr * 0.25;
             } else {
                 cfrAdjusted = factors.cfr > 0.3 ? (1 - factors.cfr) * 0.3 : factors.cfr * 0.5;
             }
@@ -777,17 +744,20 @@
         noroEvents.forEach(e => e.probability = calcularProbabilidade(e.factors, 'noro'));
         hantaEvents.forEach(e => e.probability = calcularProbabilidade(e.factors, 'hanta'));
         ebolaEvents.forEach(e => e.probability = calcularProbabilidade(e.factors, 'ebola'));
+        h5n1Events.forEach(e => e.probability = calcularProbabilidade(e.factors, 'h5n1'));
 
         noroEvents.sort((a, b) => b.probability - a.probability);
         hantaEvents.sort((a, b) => b.probability - a.probability);
         ebolaEvents.sort((a, b) => b.probability - a.probability);
+        h5n1Events.sort((a, b) => b.probability - a.probability);
 
-        const allEvents = [...noroEvents, ...hantaEvents, ...ebolaEvents].sort((a, b) => b.probability - a.probability);
+        const allEvents = [...noroEvents, ...hantaEvents, ...ebolaEvents, ...h5n1Events].sort((a, b) => b.probability - a.probability);
 
         function getRiskColor(pct, pathogen) {
             if (pathogen === 'noro') return pct >= 80 ? '#00ff88' : pct >= 60 ? '#2ecc71' : '#1abc9c';
             if (pathogen === 'hanta') return pct >= 80 ? '#ff0000' : pct >= 60 ? '#e63946' : '#f4a261';
-            return pct >= 80 ? '#ff4400' : pct >= 60 ? '#ff8c00' : '#cc8800';
+            if (pathogen === 'ebola') return pct >= 80 ? '#ff4400' : pct >= 60 ? '#ff8c00' : '#cc8800';
+            return pct >= 80 ? '#00ffff' : pct >= 60 ? '#00e5ff' : '#0099cc';
         }
 
         function getRiskLabel(pct) {
@@ -804,15 +774,15 @@
             const tr = document.createElement('tr');
             tr.dataset.pathogen = ev.pathogen;
             tr.dataset.eventName = ev.name;
-            const pathoClass = ev.pathogen === 'noro' ? 'pathogen-noro' : ev.pathogen === 'hanta' ? 'pathogen-hanta' : 'pathogen-ebola';
-            const pathoLabel = ev.pathogen === 'noro' ? 'NORO' : ev.pathogen === 'hanta' ? 'HANTA' : 'EBOLA';
+            const pathoClass = ev.pathogen === 'noro' ? 'pathogen-noro' : ev.pathogen === 'hanta' ? 'pathogen-hanta' : ev.pathogen === 'ebola' ? 'pathogen-ebola' : 'pathogen-h5n1';
+            const pathoLabel = ev.pathogen === 'noro' ? 'NORO' : ev.pathogen === 'hanta' ? 'HANTA' : ev.pathogen === 'ebola' ? 'EBOLA' : 'H5N1';
             tr.innerHTML = `
                 <td style="color:var(--text-secondary);font-family:'Share Tech Mono',monospace;">${idx + 1}</td>
                 <td>${ev.icon} <strong>${ev.name}</strong></td>
                 <td><span class="pathogen-badge ${pathoClass}">${pathoLabel}</span></td>
                 <td>
-                    <div style="display:flex;align-items:center;gap:8px;">
-                        <div class="progress-bar-bg" style="width:70px;">
+                    <div style="display:flex;align-items:center;gap:6px;">
+                        <div class="progress-bar-bg" style="width:60px;">
                             <div class="progress-bar-fill" style="width:${ev.probability}%;background:${getRiskColor(ev.probability, ev.pathogen)};"></div>
                         </div>
                         <strong style="color:${getRiskColor(ev.probability, ev.pathogen)};font-family:'Share Tech Mono',monospace;">${ev.probability}%</strong>
@@ -827,37 +797,31 @@
         });
 
         // ==================== SELECT EVENT ====================
-        let selectedNoro = null;
-        let selectedHanta = null;
-        let selectedEbola = null;
+        let selectedNoro = null, selectedHanta = null, selectedEbola = null, selectedH5n1 = null;
 
         function selectEvent(ev, tr) {
             document.querySelectorAll(`tr[data-pathogen="${ev.pathogen}"]`).forEach(r => {
-                r.classList.remove('selected-noro', 'selected-hanta', 'selected-ebola');
+                r.classList.remove('selected-noro', 'selected-hanta', 'selected-ebola', 'selected-h5n1');
             });
+            const selClass = `selected-${ev.pathogen}`;
+            tr.classList.add(selClass);
 
-            if (ev.pathogen === 'noro') {
-                tr.classList.add('selected-noro');
-                selectedNoro = ev;
-            } else if (ev.pathogen === 'hanta') {
-                tr.classList.add('selected-hanta');
-                selectedHanta = ev;
-            } else {
-                tr.classList.add('selected-ebola');
-                selectedEbola = ev;
-            }
+            if (ev.pathogen === 'noro') selectedNoro = ev;
+            else if (ev.pathogen === 'hanta') selectedHanta = ev;
+            else if (ev.pathogen === 'ebola') selectedEbola = ev;
+            else selectedH5n1 = ev;
 
             updateDetailPanel(ev);
             updateRadarChart();
         }
 
         function updateDetailPanel(ev) {
-            const contentId = ev.pathogen === 'noro' ? 'noroDetailContent' : ev.pathogen === 'hanta' ? 'hantaDetailContent' : 'ebolaDetailContent';
+            const contentId = ev.pathogen === 'noro' ? 'noroDetailContent' : ev.pathogen === 'hanta' ? 'hantaDetailContent' : ev.pathogen === 'ebola' ? 'ebolaDetailContent' : 'h5n1DetailContent';
             const content = document.getElementById(contentId);
 
             content.innerHTML = `
                 <h4>${ev.icon} ${ev.name}</h4>
-                <div style="margin-bottom:6px;">
+                <div style="margin-bottom:4px;">
                     <span class="risk-level-pill ${getPillClass(ev.probability)}">${getRiskLabel(ev.probability)}</span>
                 </div>
                 <div class="detail-stat"><span class="stat-label">Probabilidade</span><span class="stat-value" style="color:${getRiskColor(ev.probability, ev.pathogen)};">${ev.probability}%</span></div>
@@ -882,15 +846,15 @@
             return new Chart(ctx, {
                 type: 'bar',
                 data: {
-                    labels: events.map(e => e.name.split('(')[0].trim().substring(0, 12)),
+                    labels: events.map(e => e.name.split('(')[0].trim().substring(0, 14)),
                     datasets: [{
                         data: events.map(e => e.probability),
-                        backgroundColor: events.map(e => getRiskColor(e.probability, pathogen) + '88'),
+                        backgroundColor: events.map(e => getRiskColor(e.probability, pathogen) + '77'),
                         borderColor: events.map(e => getRiskColor(e.probability, pathogen)),
                         borderWidth: 2,
                         borderRadius: 6,
                         borderSkipped: false,
-                        barThickness: 20,
+                        barThickness: 16,
                     }]
                 },
                 options: {
@@ -905,19 +869,17 @@
                             borderWidth: 1,
                             titleColor: '#fff',
                             bodyColor: '#c8d6e5',
-                            callbacks: {
-                                label: (ctx) => `${ctx.raw}% · ${getRiskLabel(ctx.raw)}`
-                            }
+                            callbacks: { label: (ctx) => `${ctx.raw}% · ${getRiskLabel(ctx.raw)}` }
                         }
                     },
                     scales: {
                         x: {
                             beginAtZero: true, max: 100,
-                            ticks: { color: '#8395a7', callback: v => v + '%', font: { size: 9 } },
+                            ticks: { color: '#8395a7', callback: v => v + '%', font: { size: 8 } },
                             grid: { color: '#1e2a3822' }
                         },
                         y: {
-                            ticks: { color: '#c8d6e5', font: { size: 9 }, padding: 4 },
+                            ticks: { color: '#c8d6e5', font: { size: 8 }, padding: 2 },
                             grid: { display: false }
                         }
                     }
@@ -928,8 +890,9 @@
         createBarChart('noroChart', noroEvents, 'noro');
         createBarChart('hantaChart', hantaEvents, 'hanta');
         createBarChart('ebolaChart', ebolaEvents, 'ebola');
+        createBarChart('h5n1Chart', h5n1Events, 'h5n1');
 
-        // ==================== RADAR CHART TRIPLICE ====================
+        // ==================== RADAR CHART QUADRUPLO ====================
         const radarCtx = document.getElementById('radarChart').getContext('2d');
         let radarChart = new Chart(radarCtx, {
             type: 'radar',
@@ -937,11 +900,13 @@
                 labels: ['Transmissao', 'CFR', 'Conectividade', 'Baixa Contencao', 'Reservatorio', 'Mutacoes', 'Dose Infectante', 'Incubacao'],
                 datasets: [
                     { label: 'Norovirus (selecione)', data: [0,0,0,0,0,0,0,0],
-                      backgroundColor: '#2ecc7118', borderColor: '#2ecc71', borderWidth: 2, pointRadius: 3, pointBackgroundColor: '#2ecc71' },
+                      backgroundColor: '#2ecc7112', borderColor: '#2ecc71', borderWidth: 2, pointRadius: 3, pointBackgroundColor: '#2ecc71' },
                     { label: 'Hantavirus (selecione)', data: [0,0,0,0,0,0,0,0],
-                      backgroundColor: '#ff444418', borderColor: '#ff4444', borderWidth: 2, pointRadius: 3, pointBackgroundColor: '#ff4444' },
+                      backgroundColor: '#ff444412', borderColor: '#ff4444', borderWidth: 2, pointRadius: 3, pointBackgroundColor: '#ff4444' },
                     { label: 'Ebola (selecione)', data: [0,0,0,0,0,0,0,0],
-                      backgroundColor: '#ff8c0018', borderColor: '#ff8c00', borderWidth: 2, pointRadius: 3, pointBackgroundColor: '#ff8c00' }
+                      backgroundColor: '#ff8c0012', borderColor: '#ff8c00', borderWidth: 2, pointRadius: 3, pointBackgroundColor: '#ff8c00' },
+                    { label: 'H5N1 (selecione)', data: [0,0,0,0,0,0,0,0],
+                      backgroundColor: '#00e5ff12', borderColor: '#00e5ff', borderWidth: 2, pointRadius: 3, pointBackgroundColor: '#00e5ff' }
                 ]
             },
             options: {
@@ -952,11 +917,11 @@
                         beginAtZero: true, max: 100,
                         ticks: { color: '#8395a7', backdropColor: 'transparent', font: { size: 8 } },
                         grid: { color: '#1e2a3844' },
-                        pointLabels: { color: '#c8d6e5', font: { size: 9 } }
+                        pointLabels: { color: '#c8d6e5', font: { size: 8 } }
                     }
                 },
                 plugins: {
-                    legend: { labels: { color: '#c8d6e5', font: { size: 10 }, usePointStyle: true, pointStyleWidth: 8 } }
+                    legend: { labels: { color: '#c8d6e5', font: { size: 9 }, usePointStyle: true, pointStyleWidth: 8 } }
                 }
             }
         });
@@ -971,12 +936,15 @@
         }
 
         function updateRadarChart() {
-            radarChart.data.datasets[0].data = selectedNoro ? factorsToRadar(selectedNoro.factors) : [0,0,0,0,0,0,0,0];
-            radarChart.data.datasets[0].label = selectedNoro ? 'Norovirus: ' + selectedNoro.name.split('(')[0].trim() : 'Norovirus (selecione)';
-            radarChart.data.datasets[1].data = selectedHanta ? factorsToRadar(selectedHanta.factors) : [0,0,0,0,0,0,0,0];
-            radarChart.data.datasets[1].label = selectedHanta ? 'Hantavirus: ' + selectedHanta.name.split('(')[0].trim() : 'Hantavirus (selecione)';
-            radarChart.data.datasets[2].data = selectedEbola ? factorsToRadar(selectedEbola.factors) : [0,0,0,0,0,0,0,0];
-            radarChart.data.datasets[2].label = selectedEbola ? 'Ebola: ' + selectedEbola.name.split('(')[0].trim() : 'Ebola (selecione)';
+            const ds = radarChart.data.datasets;
+            ds[0].data = selectedNoro ? factorsToRadar(selectedNoro.factors) : [0,0,0,0,0,0,0,0];
+            ds[0].label = selectedNoro ? 'Norovirus: ' + selectedNoro.name.split('(')[0].trim() : 'Norovirus (selecione)';
+            ds[1].data = selectedHanta ? factorsToRadar(selectedHanta.factors) : [0,0,0,0,0,0,0,0];
+            ds[1].label = selectedHanta ? 'Hantavirus: ' + selectedHanta.name.split('(')[0].trim() : 'Hantavirus (selecione)';
+            ds[2].data = selectedEbola ? factorsToRadar(selectedEbola.factors) : [0,0,0,0,0,0,0,0];
+            ds[2].label = selectedEbola ? 'Ebola: ' + selectedEbola.name.split('(')[0].trim() : 'Ebola (selecione)';
+            ds[3].data = selectedH5n1 ? factorsToRadar(selectedH5n1.factors) : [0,0,0,0,0,0,0,0];
+            ds[3].label = selectedH5n1 ? 'H5N1: ' + selectedH5n1.name.split('(')[0].trim() : 'H5N1 (selecione)';
             radarChart.update();
         }
 
@@ -984,27 +952,25 @@
         document.getElementById('noroAvgRisk').textContent = (noroEvents.reduce((s, e) => s + e.probability, 0) / noroEvents.length).toFixed(1) + '%';
         document.getElementById('hantaAvgRisk').textContent = (hantaEvents.reduce((s, e) => s + e.probability, 0) / hantaEvents.length).toFixed(1) + '%';
         document.getElementById('ebolaAvgRisk').textContent = (ebolaEvents.reduce((s, e) => s + e.probability, 0) / ebolaEvents.length).toFixed(1) + '%';
+        document.getElementById('h5n1AvgRisk').textContent = (h5n1Events.reduce((s, e) => s + e.probability, 0) / h5n1Events.length).toFixed(1) + '%';
 
-        /* Estimativa de casos totais */
         function extractCases(str) {
+            if (str.includes('N/A')) return 0;
             const match = str.match(/[\d.,]+/);
             return match ? parseInt(match[0].replace(/[.,]/g, '')) : 0;
         }
-        const totalN = noroEvents.reduce((s, e) => s + extractCases(e.casos), 0);
-        const totalH = hantaEvents.reduce((s, e) => s + extractCases(e.casos), 0);
-        const totalE = ebolaEvents.reduce((s, e) => s + extractCases(e.casos), 0);
-        const totalAll = totalN + totalH + totalE;
+        const totalAll = noroEvents.reduce((s, e) => s + extractCases(e.casos), 0) +
+                         hantaEvents.reduce((s, e) => s + extractCases(e.casos), 0) +
+                         ebolaEvents.reduce((s, e) => s + extractCases(e.casos), 0) +
+                         h5n1Events.reduce((s, e) => s + extractCases(e.casos), 0);
         document.getElementById('totalCases').textContent = totalAll >= 1000 ? (totalAll / 1000).toFixed(1) + 'K' : totalAll;
 
         // ==================== AUTO-SELECT ====================
-        // Selecionar primeiros eventos automaticamente
         setTimeout(() => {
-            const firstNoroRow = document.querySelector('tr[data-pathogen="noro"]');
-            const firstHantaRow = document.querySelector('tr[data-pathogen="hanta"]');
-            const firstEbolaRow = document.querySelector('tr[data-pathogen="ebola"]');
-            if (firstNoroRow) firstNoroRow.click();
-            if (firstHantaRow) firstHantaRow.click();
-            if (firstEbolaRow) firstEbolaRow.click();
+            document.querySelector('tr[data-pathogen="noro"]')?.click();
+            document.querySelector('tr[data-pathogen="hanta"]')?.click();
+            document.querySelector('tr[data-pathogen="ebola"]')?.click();
+            document.querySelector('tr[data-pathogen="h5n1"]')?.click();
         }, 300);
     </script>
 </body>
