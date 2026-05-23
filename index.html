@@ -3,975 +3,493 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CLASSIFICADO · Risco Pandêmico Quádruplo · Norovírus + Hantavírus + Ebola + H5N1 · 14 MAI 2026</title>
+    <title>Dr/Obscuros · Risco Pandêmico Quádruplo · 18 MAI 2026</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <style>
         :root {
-            --bg: #06090f;
-            --panel: #0d1117;
-            --border: #1e2a38;
-            --text: #c8d6e5;
-            --text-secondary: #8395a7;
-            --accent: #e63946;
-            --orange: #f4a261;
-            --green: #2ecc71;
-            --green-dark: #1abc9c;
-            --purple: #a29bfe;
-            --gold: #ffd700;
-            --hanta: #ff4444;
-            --hanta-light: #ff6666;
-            --hanta-bg: rgba(255, 68, 68, 0.06);
-            --hanta-border: rgba(255, 68, 68, 0.25);
-            --noro: #2ecc71;
-            --noro-light: #66ff99;
-            --noro-bg: rgba(46, 204, 113, 0.06);
-            --noro-border: rgba(46, 204, 113, 0.25);
-            --ebola: #ff8c00;
-            --ebola-light: #ffaa33;
-            --ebola-bg: rgba(255, 140, 0, 0.06);
-            --ebola-border: rgba(255, 140, 0, 0.25);
-            --h5n1: #00e5ff;
-            --h5n1-light: #66f0ff;
-            --h5n1-bg: rgba(0, 229, 255, 0.06);
-            --h5n1-border: rgba(0, 229, 255, 0.25);
-            --card-bg: #111820;
-            --card-hover: #161e2a;
+            --bg:#06090f;--panel:#0d1117;--border:#1e2a38;--text:#c8d6e5;--text-sec:#8395a7;
+            --noro:#2ecc71;--noro-bg:rgba(46,204,113,0.06);--hanta:#ff4444;--hanta-bg:rgba(255,68,68,0.06);
+            --ebola:#ff8c00;--ebola-bg:rgba(255,140,0,0.06);--h5n1:#00e5ff;--h5n1-bg:rgba(0,229,255,0.06);
+            --gold:#ffd700;--purple:#a29bfe;--card:#111820;
         }
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body {
-            background: var(--bg);
-            color: var(--text);
-            font-family: 'Segoe UI', 'Inter', system-ui, sans-serif;
-            min-height: 100vh;
-            overflow-x: hidden;
-        }
-        body::after {
-            content: '';
-            position: fixed;
-            top: 0; left: 0; right: 0; bottom: 0;
-            pointer-events: none;
-            z-index: 9999;
-            background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.03) 2px, rgba(0,0,0,0.03) 4px);
-        }
+        *{margin:0;padding:0;box-sizing:border-box;}
+        body{background:var(--bg);color:var(--text);font-family:'Segoe UI',system-ui,sans-serif;min-height:100vh;overflow-x:hidden;}
+        body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:9999;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,0.03) 2px,rgba(0,0,0,0.03) 4px);}
 
-        .header {
-            background: linear-gradient(180deg, #0d1117 0%, #0a0e14 100%);
-            border-bottom: 2px solid var(--border);
-            padding: 14px 24px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 10px;
-            position: relative;
-        }
-        .header::after {
-            content: '';
-            position: absolute;
-            bottom: -2px; left: 0; right: 0;
-            height: 1px;
-            background: linear-gradient(90deg, transparent, var(--noro), var(--h5n1), var(--ebola), var(--hanta), transparent);
-            animation: headerGlow 4s ease-in-out infinite;
-        }
-        @keyframes headerGlow {
-            0%, 100% { opacity: 0.4; }
-            50% { opacity: 1; }
-        }
-        .header-left h1 {
-            font-family: 'Orbitron', monospace;
-            font-size: 0.9em;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            color: #fff;
-            margin-bottom: 2px;
-        }
-        .header-left .subtitle {
-            font-family: 'Share Tech Mono', monospace;
-            font-size: 0.55em;
-            color: var(--text-secondary);
-            letter-spacing: 1px;
-        }
-        .header-right {
-            display: flex;
-            gap: 8px;
-            align-items: center;
-            flex-wrap: wrap;
-        }
-        .badge {
-            padding: 5px 12px;
-            border-radius: 20px;
-            font-size: 0.58em;
-            font-weight: 700;
-            letter-spacing: 1px;
-            display: flex;
-            align-items: center;
-            gap: 5px;
-            font-family: 'Share Tech Mono', monospace;
-        }
-        .badge-noro { background: rgba(46,204,113,0.12); border: 1px solid rgba(46,204,113,0.3); color: var(--noro-light); }
-        .badge-hanta { background: rgba(255,68,68,0.12); border: 1px solid rgba(255,68,68,0.3); color: var(--hanta-light); }
-        .badge-ebola { background: rgba(255,140,0,0.12); border: 1px solid rgba(255,140,0,0.3); color: var(--ebola-light); }
-        .badge-h5n1 { background: rgba(0,229,255,0.12); border: 1px solid rgba(0,229,255,0.3); color: var(--h5n1-light); }
-        .badge-alert {
-            background: rgba(255,0,0,0.15);
-            border: 1px solid rgba(255,0,0,0.4);
-            color: #ff6666;
-            animation: pulse-alert 2s infinite;
-        }
-        @keyframes pulse-alert {
-            0%, 100% { border-color: rgba(255,0,0,0.4); box-shadow: 0 0 4px rgba(255,0,0,0.1); }
-            50% { border-color: rgba(255,0,0,0.8); box-shadow: 0 0 12px rgba(255,0,0,0.3); }
-        }
+        .hdr{background:linear-gradient(180deg,#0d1117,#0a0e14);border-bottom:2px solid var(--border);padding:12px 20px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;position:relative;}
+        .hdr::after{content:'';position:absolute;bottom:-2px;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--noro),var(--h5n1),var(--ebola),var(--hanta),transparent);animation:hg 3s ease-in-out infinite;}
+        @keyframes hg{0%,100%{opacity:.5}50%{opacity:1}}
+        .hdr h1{font-family:'Orbitron',monospace;font-size:.85em;letter-spacing:2px;text-transform:uppercase;color:#fff;}
+        .hdr .sub{font-family:'Share Tech Mono',monospace;font-size:.52em;color:var(--text-sec);letter-spacing:1px;}
+        .hdr-r{display:flex;gap:6px;flex-wrap:wrap;align-items:center;}
+        .bdg{padding:4px 10px;border-radius:16px;font-size:.52em;font-weight:700;letter-spacing:1px;display:flex;align-items:center;gap:4px;font-family:'Share Tech Mono',monospace;}
+        .bdg-n{background:rgba(46,204,113,.12);border:1px solid rgba(46,204,113,.3);color:#66ff99;}
+        .bdg-h{background:rgba(255,68,68,.12);border:1px solid rgba(255,68,68,.3);color:#ff6666;}
+        .bdg-e{background:rgba(255,140,0,.12);border:1px solid rgba(255,140,0,.3);color:#ffaa33;}
+        .bdg-5{background:rgba(0,229,255,.12);border:1px solid rgba(0,229,255,.3);color:#66f0ff;}
+        .bdg-a{background:rgba(255,0,0,.18);border:1px solid rgba(255,0,0,.5);color:#ff4444;animation:pa 1.5s infinite;}
+        .bdg-u{background:rgba(0,229,255,.15);border:1px solid rgba(0,229,255,.4);color:#00e5ff;}
+        @keyframes pa{0%,100%{border-color:rgba(255,0,0,.5);box-shadow:0 0 4px rgba(255,0,0,.1)}50%{border-color:rgba(255,0,0,1);box-shadow:0 0 16px rgba(255,0,0,.4)}}
 
-        .dashboard {
-            display: grid;
-            grid-template-columns: 1fr 380px;
-            gap: 14px;
-            padding: 14px 20px;
-            max-width: 1700px;
-            margin: 0 auto;
-            height: calc(100vh - 68px);
-        }
-        .main-panel {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-            overflow-y: auto;
-            padding-right: 6px;
-        }
-        .main-panel::-webkit-scrollbar { width: 4px; }
-        .main-panel::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+        .dash{display:grid;grid-template-columns:1fr 370px;gap:12px;padding:12px 18px;max-width:1700px;margin:0 auto;height:calc(100vh - 62px);}
+        .mp{display:flex;flex-direction:column;gap:10px;overflow-y:auto;padding-right:6px;}
+        .mp::-webkit-scrollbar{width:4px;}.mp::-webkit-scrollbar-thumb{background:var(--border);border-radius:4px;}
 
-        .summary-row {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 10px;
-        }
-        .summary-card {
-            background: var(--card-bg);
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            padding: 12px 14px;
-            transition: all 0.3s;
-            position: relative;
-            overflow: hidden;
-        }
-        .summary-card:hover {
-            border-color: #2e3d52;
-            transform: translateY(-2px);
-            box-shadow: 0 8px 24px rgba(0,0,0,0.3);
-        }
-        .summary-card .card-icon { font-size: 1.1em; margin-bottom: 4px; }
-        .summary-card .card-value {
-            font-family: 'Orbitron', monospace;
-            font-size: 1.4em;
-            font-weight: 800;
-            letter-spacing: -1px;
-            line-height: 1;
-            margin-bottom: 2px;
-        }
-        .summary-card .card-label {
-            font-size: 0.5em;
-            color: var(--text-secondary);
-            letter-spacing: 1px;
-            text-transform: uppercase;
-        }
-        .summary-card .card-trend {
-            font-size: 0.48em;
-            margin-top: 3px;
-            color: var(--text-secondary);
-        }
-        .summary-card::after {
-            content: '';
-            position: absolute;
-            top: 0; right: 0;
-            width: 3px; height: 100%;
-            border-radius: 0 12px 12px 0;
-        }
-        .card-noro::after { background: var(--noro); }
-        .card-hanta::after { background: var(--hanta); }
-        .card-ebola::after { background: var(--ebola); }
-        .card-h5n1::after { background: var(--h5n1); }
-        .card-total::after { background: var(--gold); }
-        .card-countries::after { background: var(--purple); }
+        .sr{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:8px;}
+        .sc{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:10px 12px;transition:all .3s;position:relative;overflow:hidden;}
+        .sc:hover{border-color:#2e3d52;transform:translateY(-2px);box-shadow:0 6px 20px rgba(0,0,0,.3);}
+        .sc .ci{font-size:1em;margin-bottom:3px;}.sc .cv{font-family:'Orbitron',monospace;font-size:1.3em;font-weight:800;letter-spacing:-1px;line-height:1;margin-bottom:2px;}
+        .sc .cl{font-size:.45em;color:var(--text-sec);letter-spacing:1px;text-transform:uppercase;}
+        .sc .ct{font-size:.42em;margin-top:2px;color:var(--text-sec);}
+        .sc .cd{position:absolute;top:8px;right:10px;font-size:.45em;font-family:'Share Tech Mono',monospace;font-weight:700;padding:2px 5px;border-radius:4px;}
+        .dup{background:rgba(255,0,0,.15);color:#ff4444;}.ddn{background:rgba(46,204,113,.15);color:#2ecc71;}
+        .sc::after{content:'';position:absolute;top:0;right:0;width:3px;height:100%;border-radius:0 10px 10px 0;}
+        .cn::after{background:var(--noro);}.ch::after{background:var(--hanta);}.ce::after{background:var(--ebola);}.c5::after{background:var(--h5n1);}.ct2::after{background:var(--gold);}.cp::after{background:var(--purple);}
 
-        .chart-card {
-            background: var(--card-bg);
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            padding: 14px 18px;
-            transition: all 0.3s;
-        }
-        .chart-card:hover { border-color: #2e3d52; }
-        .chart-card .chart-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 10px;
-            flex-wrap: wrap;
-            gap: 6px;
-        }
-        .chart-card h3 {
-            font-size: 0.7em;
-            letter-spacing: 1px;
-            color: #fff;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-family: 'Orbitron', monospace;
-        }
-        .chart-card h3 .dot {
-            width: 7px; height: 7px;
-            border-radius: 50%;
-            display: inline-block;
-        }
-        .dot-noro { background: var(--noro); box-shadow: 0 0 8px var(--noro); }
-        .dot-hanta { background: var(--hanta); box-shadow: 0 0 8px var(--hanta); }
-        .dot-ebola { background: var(--ebola); box-shadow: 0 0 8px var(--ebola); }
-        .dot-h5n1 { background: var(--h5n1); box-shadow: 0 0 8px var(--h5n1); }
+        .cc{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:12px 16px;transition:all .3s;}
+        .cc:hover{border-color:#2e3d52;}
+        .cc .ch2{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;flex-wrap:wrap;gap:4px;}
+        .cc h3{font-size:.65em;letter-spacing:1px;color:#fff;display:flex;align-items:center;gap:6px;font-family:'Orbitron',monospace;}
+        .cc h3 .dt{width:6px;height:6px;border-radius:50%;display:inline-block;}
+        .dn{background:var(--noro);box-shadow:0 0 6px var(--noro);}.dh{background:var(--hanta);box-shadow:0 0 6px var(--hanta);}
+        .de{background:var(--ebola);box-shadow:0 0 6px var(--ebola);}.d5{background:var(--h5n1);box-shadow:0 0 6px var(--h5n1);}
 
-        .chart-quadruple {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 12px;
-        }
-        .chart-box { position: relative; height: 240px; }
-        .chart-box canvas { max-height: 240px; }
+        .cq{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+        .cb{position:relative;height:220px;}.cb canvas{max-height:220px;}
 
-        .risk-table { width: 100%; border-collapse: collapse; font-size: 0.65em; }
-        .risk-table th {
-            text-align: left;
-            color: var(--text-secondary);
-            font-weight: 600;
-            font-size: 0.6em;
-            letter-spacing: 1px;
-            padding: 7px 8px;
-            border-bottom: 1px solid var(--border);
-            text-transform: uppercase;
-        }
-        .risk-table td {
-            padding: 7px 8px;
-            border-bottom: 1px solid rgba(30,42,56,0.5);
-            vertical-align: middle;
-        }
-        .risk-table tr { transition: all 0.2s; cursor: pointer; }
-        .risk-table tbody tr:hover { background: rgba(255,255,255,0.02); }
-        .risk-table tbody tr.selected-noro { background: var(--noro-bg); border-left: 3px solid var(--noro); }
-        .risk-table tbody tr.selected-hanta { background: var(--hanta-bg); border-left: 3px solid var(--hanta); }
-        .risk-table tbody tr.selected-ebola { background: var(--ebola-bg); border-left: 3px solid var(--ebola); }
-        .risk-table tbody tr.selected-h5n1 { background: var(--h5n1-bg); border-left: 3px solid var(--h5n1); }
+        .rt{width:100%;border-collapse:collapse;font-size:.6em;}
+        .rt th{text-align:left;color:var(--text-sec);font-weight:600;font-size:.55em;letter-spacing:1px;padding:6px 7px;border-bottom:1px solid var(--border);text-transform:uppercase;}
+        .rt td{padding:6px 7px;border-bottom:1px solid rgba(30,42,56,.5);vertical-align:middle;}
+        .rt tr{transition:all .2s;cursor:pointer;}
+        .rt tbody tr:hover{background:rgba(255,255,255,.02);}
+        .rt tbody tr.sn{background:var(--noro-bg);border-left:3px solid var(--noro);}
+        .rt tbody tr.sh{background:var(--hanta-bg);border-left:3px solid var(--hanta);}
+        .rt tbody tr.se{background:var(--ebola-bg);border-left:3px solid var(--ebola);}
+        .rt tbody tr.s5{background:var(--h5n1-bg);border-left:3px solid var(--h5n1);}
+        .rt .ne td{position:relative;}
+        .rt .ne td:first-child::before{content:'NEW';position:absolute;left:-2px;top:50%;transform:translateY(-50%);font-size:.5em;background:rgba(255,0,0,.2);color:#ff4444;padding:1px 3px;border-radius:3px;font-family:'Share Tech Mono',monospace;animation:bn 2s infinite;}
+        @keyframes bn{0%,100%{opacity:1}50%{opacity:.4}}
 
-        .risk-level-pill {
-            display: inline-block;
-            padding: 3px 8px;
-            border-radius: 10px;
-            font-size: 0.58em;
-            font-weight: 700;
-            letter-spacing: 1px;
-        }
-        .pill-critical { background: rgba(255,0,0,0.2); color: #ff4444; border: 1px solid rgba(255,0,0,0.4); }
-        .pill-high { background: rgba(255,165,0,0.2); color: #f4a261; border: 1px solid rgba(244,162,97,0.4); }
-        .pill-moderate { background: rgba(255,215,0,0.15); color: #ffd700; border: 1px solid rgba(255,215,0,0.3); }
-        .pill-low { background: rgba(46,204,113,0.15); color: #2ecc71; border: 1px solid rgba(46,204,113,0.3); }
+        .rp{display:inline-block;padding:2px 7px;border-radius:8px;font-size:.55em;font-weight:700;letter-spacing:1px;}
+        .pc{background:rgba(255,0,0,.2);color:#ff4444;border:1px solid rgba(255,0,0,.4);}
+        .ph{background:rgba(255,165,0,.2);color:#f4a261;border:1px solid rgba(244,162,97,.4);}
+        .pm{background:rgba(255,215,0,.15);color:#ffd700;border:1px solid rgba(255,215,0,.3);}
+        .pl{background:rgba(46,204,113,.15);color:#2ecc71;border:1px solid rgba(46,204,113,.3);}
 
-        .pathogen-badge {
-            font-size: 0.52em;
-            padding: 2px 6px;
-            border-radius: 8px;
-            font-weight: 700;
-            letter-spacing: 1px;
-            font-family: 'Share Tech Mono', monospace;
-        }
-        .pathogen-noro { background: rgba(46,204,113,0.15); color: #2ecc71; border: 1px solid rgba(46,204,113,0.3); }
-        .pathogen-hanta { background: rgba(255,68,68,0.15); color: #ff4444; border: 1px solid rgba(255,68,68,0.3); }
-        .pathogen-ebola { background: rgba(255,140,0,0.15); color: #ff8c00; border: 1px solid rgba(255,140,0,0.3); }
-        .pathogen-h5n1 { background: rgba(0,229,255,0.15); color: #00e5ff; border: 1px solid rgba(0,229,255,0.3); }
+        .pb{font-size:.48em;padding:2px 5px;border-radius:6px;font-weight:700;letter-spacing:1px;font-family:'Share Tech Mono',monospace;}
+        .pn{background:rgba(46,204,113,.15);color:#2ecc71;border:1px solid rgba(46,204,113,.3);}
+        .pha{background:rgba(255,68,68,.15);color:#ff4444;border:1px solid rgba(255,68,68,.3);}
+        .pe{background:rgba(255,140,0,.15);color:#ff8c00;border:1px solid rgba(255,140,0,.3);}
+        .p5{background:rgba(0,229,255,.15);color:#00e5ff;border:1px solid rgba(0,229,255,.3);}
 
-        .progress-bar-bg {
-            width: 100%; height: 5px;
-            background: #1a2330;
-            border-radius: 10px;
-            overflow: hidden;
-        }
-        .progress-bar-fill {
-            height: 100%;
-            border-radius: 10px;
-            transition: width 0.6s ease;
-        }
+        .bbg{width:100%;height:4px;background:#1a2330;border-radius:10px;overflow:hidden;}
+        .bfl{height:100%;border-radius:10px;transition:width .6s ease;}
 
-        .sidebar {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-            overflow-y: auto;
-            padding-right: 4px;
-        }
-        .sidebar::-webkit-scrollbar { width: 4px; }
-        .sidebar::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+        .sb{display:flex;flex-direction:column;gap:6px;overflow-y:auto;padding-right:4px;}
+        .sb::-webkit-scrollbar{width:4px;}.sb::-webkit-scrollbar-thumb{background:var(--border);border-radius:4px;}
 
-        .detail-panel {
-            background: var(--card-bg);
-            border: 1px solid var(--border);
-            border-radius: 10px;
-            padding: 12px;
-            transition: all 0.3s;
-        }
-        .detail-panel.noro-panel { border-left: 3px solid var(--noro); }
-        .detail-panel.hanta-panel { border-left: 3px solid var(--hanta); }
-        .detail-panel.ebola-panel { border-left: 3px solid var(--ebola); }
-        .detail-panel.h5n1-panel { border-left: 3px solid var(--h5n1); }
+        .dp{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:10px;transition:all .3s;}
+        .dp.np{border-left:3px solid var(--noro);}.dp.hp{border-left:3px solid var(--hanta);}
+        .dp.ep{border-left:3px solid var(--ebola);}.dp.5p{border-left:3px solid var(--h5n1);}
+        .dp .dph{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;padding-bottom:5px;border-bottom:1px solid var(--border);}
+        .dp .dph h3{font-size:.6em;letter-spacing:1px;color:#fff;display:flex;align-items:center;gap:5px;font-family:'Orbitron',monospace;}
+        .dp .dph .dpb{font-size:.45em;padding:1px 5px;border-radius:4px;font-weight:700;letter-spacing:1px;font-family:'Share Tech Mono',monospace;}
+        .bsn{background:rgba(46,204,113,.15);color:#2ecc71;border:1px solid rgba(46,204,113,.3);}
+        .bsh{background:rgba(255,68,68,.15);color:#ff4444;border:1px solid rgba(255,68,68,.3);}
+        .bse{background:rgba(255,140,0,.15);color:#ff8c00;border:1px solid rgba(255,140,0,.3);}
+        .bs5{background:rgba(0,229,255,.15);color:#00e5ff;border:1px solid rgba(0,229,255,.3);}
 
-        .detail-panel .panel-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 8px;
-            padding-bottom: 6px;
-            border-bottom: 1px solid var(--border);
-        }
-        .detail-panel .panel-header h3 {
-            font-size: 0.65em;
-            letter-spacing: 1px;
-            color: #fff;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            font-family: 'Orbitron', monospace;
-        }
-        .detail-panel .panel-header .panel-badge {
-            font-size: 0.5em;
-            padding: 2px 6px;
-            border-radius: 6px;
-            font-weight: 700;
-            letter-spacing: 1px;
-            font-family: 'Share Tech Mono', monospace;
-        }
-        .badge-noro-sm { background: rgba(46,204,113,0.15); color: #2ecc71; border: 1px solid rgba(46,204,113,0.3); }
-        .badge-hanta-sm { background: rgba(255,68,68,0.15); color: #ff4444; border: 1px solid rgba(255,68,68,0.3); }
-        .badge-ebola-sm { background: rgba(255,140,0,0.15); color: #ff8c00; border: 1px solid rgba(255,140,0,0.3); }
-        .badge-h5n1-sm { background: rgba(0,229,255,0.15); color: #00e5ff; border: 1px solid rgba(0,229,255,0.3); }
+        .dc h4{color:#fff;font-size:.65em;margin-bottom:3px;}
+        .dc .ds{display:flex;justify-content:space-between;padding:2px 0;border-bottom:1px solid rgba(30,42,56,.3);font-size:.5em;}
+        .dc .ds .sl{color:var(--text-sec);}.dc .ds .sv{font-weight:600;color:#fff;}
+        .dc .ed{margin-top:4px;font-size:.47em;color:#b0bec5;line-height:1.5;padding:4px 6px;background:rgba(255,255,255,.02);border-radius:5px;}
+        .dc .ft{display:flex;flex-wrap:wrap;gap:2px;margin-top:4px;}
+        .dc .ftg{font-size:.44em;padding:1px 4px;border-radius:3px;border:1px solid var(--border);background:rgba(255,255,255,.02);color:var(--text-sec);}
+        .pt{font-size:.5em;color:#5a6e8a;text-align:center;padding:10px 4px;font-style:italic;}
+        .nt{font-size:.42em;color:#5a6e8a;text-align:center;font-style:italic;line-height:1.5;padding:4px;background:rgba(255,255,255,.01);border-radius:6px;}
+        .qa{background:linear-gradient(135deg,rgba(46,204,113,.06),rgba(0,229,255,.06),rgba(255,140,0,.06),rgba(255,68,68,.06));border:1px solid rgba(255,100,50,.3);border-radius:6px;padding:6px 8px;font-size:.46em;color:#ffeedd;text-align:center;font-family:'Share Tech Mono',monospace;}
+        .cu{background:rgba(255,0,0,.08);border:1px solid rgba(255,0,0,.4);border-radius:6px;padding:6px 8px;font-size:.46em;color:#ff8888;text-align:center;font-family:'Share Tech Mono',monospace;animation:pa 1.5s infinite;}
 
-        .detail-content h4 { color: #fff; font-size: 0.7em; margin-bottom: 4px; }
-        .detail-content .detail-stat {
-            display: flex;
-            justify-content: space-between;
-            padding: 3px 0;
-            border-bottom: 1px solid rgba(30,42,56,0.3);
-            font-size: 0.55em;
-        }
-        .detail-content .detail-stat .stat-label { color: var(--text-secondary); }
-        .detail-content .detail-stat .stat-value { font-weight: 600; color: #fff; }
-        .detail-content .event-desc {
-            margin-top: 5px;
-            font-size: 0.52em;
-            color: #b0bec5;
-            line-height: 1.5;
-            padding: 5px 7px;
-            background: rgba(255,255,255,0.02);
-            border-radius: 6px;
-        }
-        .detail-content .factors {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 3px;
-            margin-top: 5px;
-        }
-        .factor-tag {
-            font-size: 0.48em;
-            padding: 2px 5px;
-            border-radius: 4px;
-            border: 1px solid var(--border);
-            background: rgba(255,255,255,0.02);
-            color: var(--text-secondary);
-        }
-        .placeholder-text {
-            font-size: 0.55em;
-            color: #5a6e8a;
-            text-align: center;
-            padding: 12px 6px;
-            font-style: italic;
-        }
-        .note {
-            font-size: 0.46em;
-            color: #5a6e8a;
-            text-align: center;
-            font-style: italic;
-            line-height: 1.5;
-            padding: 5px;
-            background: rgba(255,255,255,0.01);
-            border-radius: 6px;
-        }
-        .quad-alert {
-            background: linear-gradient(135deg, rgba(46,204,113,0.06), rgba(0,229,255,0.06), rgba(255,140,0,0.06), rgba(255,68,68,0.06));
-            border: 1px solid rgba(255,100,50,0.3);
-            border-radius: 8px;
-            padding: 7px 10px;
-            font-size: 0.5em;
-            color: #ffeedd;
-            text-align: center;
-            font-family: 'Share Tech Mono', monospace;
-        }
+        .stm{position:fixed;bottom:14px;right:14px;border:3px solid rgba(0,229,255,.1);color:rgba(0,229,255,.1);padding:4px 12px;font-family:'Orbitron',monospace;font-size:.6em;letter-spacing:3px;transform:rotate(-12deg);pointer-events:none;z-index:100;text-transform:uppercase;}
 
-        .stamp {
-            position: fixed;
-            bottom: 16px;
-            right: 16px;
-            border: 3px solid rgba(0,229,255,0.12);
-            color: rgba(0,229,255,0.12);
-            padding: 6px 14px;
-            font-family: 'Orbitron', monospace;
-            font-size: 0.65em;
-            letter-spacing: 3px;
-            transform: rotate(-12deg);
-            pointer-events: none;
-            z-index: 100;
-            text-transform: uppercase;
-        }
-
-        @media (max-width: 1200px) {
-            .chart-quadruple { grid-template-columns: 1fr; }
-            .dashboard { grid-template-columns: 1fr; height: auto; }
-        }
-        @media (max-width: 700px) {
-            .summary-row { grid-template-columns: 1fr 1fr; }
-            .header { padding: 10px 12px; }
-            .header-left h1 { font-size: 0.7em; }
-        }
+        @media(max-width:1200px){.cq{grid-template-columns:1fr;}.dash{grid-template-columns:1fr;height:auto;}}
+        @media(max-width:700px){.sr{grid-template-columns:1fr 1fr;}.hdr{padding:8px 10px;}.hdr h1{font-size:.65em;}}
     </style>
 </head>
 <body>
-    <div class="header">
-        <div class="header-left">
+    <div class="hdr">
+        <div>
             <h1>ANALISE DE RISCO PANDEMICO · QUADRUPLO</h1>
-            <div class="subtitle">Norovirus (GII.4) + Hantavirus (ANDV) + Ebola (EBOV) + Influenza A(H5N1) · 14 MAI 2026 · Dr/Obscuros</div>
+            <div class="sub">Norovirus GII.4 + Hantavirus ANDV + Ebola EBOV + Influenza A(H5N1) · 18 MAI 2026 · Dr/Obscuros</div>
         </div>
-        <div class="header-right">
-            <div class="badge badge-noro"><i class="fas fa-virus"></i> NORO</div>
-            <div class="badge badge-hanta"><i class="fas fa-lungs"></i> HANTA</div>
-            <div class="badge badge-ebola"><i class="fas fa-biohazard"></i> EBOLA</div>
-            <div class="badge badge-h5n1"><i class="fas fa-crow"></i> H5N1</div>
-            <div class="badge badge-alert"><i class="fas fa-triangle-exclamation"></i> ALERTA QUADRUPLO</div>
-        </div>
-    </div>
-
-    <div class="dashboard">
-        <div class="main-panel">
-            <div class="summary-row">
-                <div class="summary-card card-noro">
-                    <div class="card-icon"><i class="fas fa-virus" style="color:var(--noro);"></i></div>
-                    <div class="card-value" style="color: var(--noro);" id="noroAvgRisk">--</div>
-                    <div class="card-label">Risco Medio Norovirus</div>
-                    <div class="card-trend"><i class="fas fa-arrow-up"></i> +12% em 7 dias</div>
-                </div>
-                <div class="summary-card card-hanta">
-                    <div class="card-icon"><i class="fas fa-lungs" style="color:var(--hanta);"></i></div>
-                    <div class="card-value" style="color: var(--hanta);" id="hantaAvgRisk">--</div>
-                    <div class="card-label">Risco Medio Hantavirus</div>
-                    <div class="card-trend"><i class="fas fa-arrow-up"></i> +18% em 7 dias</div>
-                </div>
-                <div class="summary-card card-ebola">
-                    <div class="card-icon"><i class="fas fa-biohazard" style="color:var(--ebola);"></i></div>
-                    <div class="card-value" style="color: var(--ebola);" id="ebolaAvgRisk">--</div>
-                    <div class="card-label">Risco Medio Ebola</div>
-                    <div class="card-trend"><i class="fas fa-arrow-up"></i> +47% em 7 dias</div>
-                </div>
-                <div class="summary-card card-h5n1">
-                    <div class="card-icon"><i class="fas fa-crow" style="color:var(--h5n1);"></i></div>
-                    <div class="card-value" style="color: var(--h5n1);" id="h5n1AvgRisk">--</div>
-                    <div class="card-label">Risco Medio H5N1</div>
-                    <div class="card-trend"><i class="fas fa-arrow-up"></i> +85% em 7 dias</div>
-                </div>
-                <div class="summary-card card-total">
-                    <div class="card-icon"><i class="fas fa-chart-line" style="color:var(--gold);"></i></div>
-                    <div class="card-value" style="color: var(--gold);" id="totalCases">--</div>
-                    <div class="card-label">Casos Ativos Totais</div>
-                    <div class="card-trend"><i class="fas fa-arrow-up"></i> +91% em 10 dias</div>
-                </div>
-                <div class="summary-card card-countries">
-                    <div class="card-icon"><i class="fas fa-globe" style="color:var(--purple);"></i></div>
-                    <div class="card-value" style="color: var(--purple);">31</div>
-                    <div class="card-label">Paises Monitorados</div>
-                    <div class="card-trend"><i class="fas fa-plus"></i> +9 novos focos</div>
-                </div>
-            </div>
-
-            <div class="chart-quadruple">
-                <div class="chart-card">
-                    <div class="chart-header">
-                        <h3><span class="dot dot-noro"></span> NORO · Prob. Pandemia</h3>
-                        <span class="pathogen-badge pathogen-noro">GII.4</span>
-                    </div>
-                    <div class="chart-box"><canvas id="noroChart"></canvas></div>
-                </div>
-                <div class="chart-card">
-                    <div class="chart-header">
-                        <h3><span class="dot dot-hanta"></span> HANTA · Prob. Pandemia</h3>
-                        <span class="pathogen-badge pathogen-hanta">ANDV</span>
-                    </div>
-                    <div class="chart-box"><canvas id="hantaChart"></canvas></div>
-                </div>
-                <div class="chart-card">
-                    <div class="chart-header">
-                        <h3><span class="dot dot-ebola"></span> EBOLA · Prob. Pandemia</h3>
-                        <span class="pathogen-badge pathogen-ebola">EBOV</span>
-                    </div>
-                    <div class="chart-box"><canvas id="ebolaChart"></canvas></div>
-                </div>
-                <div class="chart-card">
-                    <div class="chart-header">
-                        <h3><span class="dot dot-h5n1"></span> H5N1 · Prob. Pandemia</h3>
-                        <span class="pathogen-badge pathogen-h5n1">HPAI</span>
-                    </div>
-                    <div class="chart-box"><canvas id="h5n1Chart"></canvas></div>
-                </div>
-            </div>
-
-            <div class="chart-card">
-                <div class="chart-header">
-                    <h3><i class="fas fa-ranking-star" style="color:var(--gold);"></i> RANKING DE RISCO PANDEMICO · Todos os Eventos</h3>
-                    <span style="font-size:0.5em;color:var(--text-secondary);">Clique para detalhes nos paineis</span>
-                </div>
-                <div style="overflow-x: auto;">
-                    <table class="risk-table">
-                        <thead>
-                            <tr>
-                                <th>#</th>
-                                <th>Evento</th>
-                                <th>Patogeno</th>
-                                <th>Probabilidade</th>
-                                <th>Nivel</th>
-                                <th>Casos</th>
-                                <th>CFR</th>
-                            </tr>
-                        </thead>
-                        <tbody id="riskTableBody"></tbody>
-                    </table>
-                </div>
-            </div>
-
-            <div class="chart-card">
-                <div class="chart-header">
-                    <h3><i class="fas fa-crosshairs" style="color:var(--accent);"></i> Comparacao de Perfis de Risco · Quadruplo</h3>
-                    <span style="font-size:0.5em;color:var(--text-secondary);">Selecione eventos na tabela acima</span>
-                </div>
-                <div class="chart-box" style="height: 320px;">
-                    <canvas id="radarChart"></canvas>
-                </div>
-            </div>
-        </div>
-
-        <div class="sidebar" id="sidebar">
-            <div class="quad-alert">
-                <i class="fas fa-triangle-exclamation"></i> ALERTA QUADRUPLO: Resistencia (NORO), dispersao multicontinental (HANTA), transmissao urbana (EBOLA), e reassortimento mammaliano (H5N1) confirmados.
-            </div>
-
-            <div class="detail-panel noro-panel" id="noroPanel">
-                <div class="panel-header">
-                    <h3><i class="fas fa-virus" style="color:var(--noro);"></i> NOROVIRUS</h3>
-                    <span class="panel-badge badge-noro-sm">GII.4</span>
-                </div>
-                <div class="detail-content" id="noroDetailContent">
-                    <div class="placeholder-text">Clique em um evento de <strong style="color:#2ecc71;">Norovirus</strong> na tabela.</div>
-                </div>
-            </div>
-
-            <div class="detail-panel hanta-panel" id="hantaPanel">
-                <div class="panel-header">
-                    <h3><i class="fas fa-lungs" style="color:var(--hanta);"></i> HANTAVIRUS</h3>
-                    <span class="panel-badge badge-hanta-sm">ANDV/SEOV</span>
-                </div>
-                <div class="detail-content" id="hantaDetailContent">
-                    <div class="placeholder-text">Clique em um evento de <strong style="color:#ff4444;">Hantavirus</strong> na tabela.</div>
-                </div>
-            </div>
-
-            <div class="detail-panel ebola-panel" id="ebolaPanel">
-                <div class="panel-header">
-                    <h3><i class="fas fa-biohazard" style="color:var(--ebola);"></i> EBOLA</h3>
-                    <span class="panel-badge badge-ebola-sm">EBOV/SUDV</span>
-                </div>
-                <div class="detail-content" id="ebolaDetailContent">
-                    <div class="placeholder-text">Clique em um evento de <strong style="color:#ff8c00;">Ebola</strong> na tabela.</div>
-                </div>
-            </div>
-
-            <div class="detail-panel h5n1-panel" id="h5n1Panel">
-                <div class="panel-header">
-                    <h3><i class="fas fa-crow" style="color:var(--h5n1);"></i> INFLUENZA H5N1</h3>
-                    <span class="panel-badge badge-h5n1-sm">HPAI</span>
-                </div>
-                <div class="detail-content" id="h5n1DetailContent">
-                    <div class="placeholder-text">Clique em um evento de <strong style="color:#00e5ff;">H5N1</strong> na tabela.</div>
-                </div>
-            </div>
-
-            <div class="note">
-                PROBABILIDADES HIPOTETICAS · Modelo multi-fatorial Dr/Obscuros v4.0.<br>
-                Classificacao: SIGMA · Atualizacao: 14/05/2026 23:45 UTC
-            </div>
+        <div class="hdr-r">
+            <div class="bdg bdg-u"><i class="fas fa-rotate"></i> UPD 18MAI</div>
+            <div class="bdg bdg-n"><i class="fas fa-virus"></i> NORO</div>
+            <div class="bdg bdg-h"><i class="fas fa-lungs"></i> HANTA</div>
+            <div class="bdg bdg-e"><i class="fas fa-biohazard"></i> EBOLA</div>
+            <div class="bdg bdg-5"><i class="fas fa-crow"></i> H5N1</div>
+            <div class="bdg bdg-a"><i class="fas fa-triangle-exclamation"></i> CRISE H5N1</div>
         </div>
     </div>
 
-    <div class="stamp">CLASSIFICADO · Dr/Obscuros</div>
+    <div class="dash">
+        <div class="mp">
+            <div class="sr">
+                <div class="sc cn"><div class="ci"><i class="fas fa-virus" style="color:var(--noro)"></i></div><div class="cd ddn">-2.1%</div><div class="cv" style="color:var(--noro)" id="vNoro">--</div><div class="cl">Risco Medio Norovirus</div><div class="ct"><i class="fas fa-arrow-down" style="color:#2ecc71"></i> Contencao parcial</div></div>
+                <div class="sc ch"><div class="ci"><i class="fas fa-lungs" style="color:var(--hanta)"></i></div><div class="cd dup">+4.3%</div><div class="cv" style="color:var(--hanta)" id="vHanta">--</div><div class="cl">Risco Medio Hantavirus</div><div class="ct"><i class="fas fa-arrow-up" style="color:#ff4444"></i> Expansao Europa</div></div>
+                <div class="sc ce"><div class="ci"><i class="fas fa-biohazard" style="color:var(--ebola)"></i></div><div class="cd dup">+6.8%</div><div class="cv" style="color:var(--ebola)" id="vEbola">--</div><div class="cl">Risco Medio Ebola</div><div class="ct"><i class="fas fa-arrow-up" style="color:#ff8c00"></i> Dispersao E.Africa</div></div>
+                <div class="sc c5"><div class="ci"><i class="fas fa-crow" style="color:var(--h5n1)"></i></div><div class="cd dup">+18.2%</div><div class="cv" style="color:var(--h5n1)" id="vH5n1">--</div><div class="cl">Risco Medio H5N1</div><div class="ct"><i class="fas fa-arrow-up" style="color:#ff4444"></i> SALTO H2H</div></div>
+                <div class="sc ct2"><div class="ci"><i class="fas fa-chart-line" style="color:var(--gold)"></i></div><div class="cd dup">+138%</div><div class="cv" style="color:var(--gold)" id="vTotal">--</div><div class="cl">Casos Ativos Totais</div><div class="ct"><i class="fas fa-arrow-up" style="color:#ff4444"></i> Explosao H5N1</div></div>
+                <div class="sc cp"><div class="ci"><i class="fas fa-globe" style="color:var(--purple)"></i></div><div class="cd dup">+11</div><div class="cv" style="color:var(--purple)">42</div><div class="cl">Paises Monitorados</div><div class="ct"><i class="fas fa-plus" style="color:#ff4444"></i> +11 novos focos</div></div>
+            </div>
+
+            <div class="cq">
+                <div class="cc"><div class="ch2"><h3><span class="dt dn"></span> NORO</h3><span class="pb pn">GII.4</span></div><div class="cb"><canvas id="cNoro"></canvas></div></div>
+                <div class="cc"><div class="ch2"><h3><span class="dt dh"></span> HANTA</h3><span class="pb pha">ANDV</span></div><div class="cb"><canvas id="cHanta"></canvas></div></div>
+                <div class="cc"><div class="ch2"><h3><span class="dt de"></span> EBOLA</h3><span class="pb pe">EBOV</span></div><div class="cb"><canvas id="cEbola"></canvas></div></div>
+                <div class="cc"><div class="ch2"><h3><span class="dt d5"></span> H5N1</h3><span class="pb p5">HPAI</span></div><div class="cb"><canvas id="cH5n1"></canvas></div></div>
+            </div>
+
+            <div class="cc">
+                <div class="ch2"><h3><i class="fas fa-ranking-star" style="color:var(--gold)"></i> RANKING DE RISCO · 18 MAI 2026</h3><span style="font-size:.45em;color:#66f0ff;font-family:'Share Tech Mono',monospace"><i class="fas fa-circle-exclamation"></i> 5 NOVOS EVENTOS</span></div>
+                <div style="overflow-x:auto"><table class="rt"><thead><tr><th>#</th><th>Evento</th><th>Patogeno</th><th>Prob.</th><th>Nivel</th><th>Casos</th><th>CFR</th><th>Delta</th></tr></thead><tbody id="tBody"></tbody></table></div>
+            </div>
+
+            <div class="cc">
+                <div class="ch2"><h3><i class="fas fa-crosshairs" style="color:#e63946"></i> Radar Quadruplo</h3></div>
+                <div class="cb" style="height:300px"><canvas id="cRadar"></canvas></div>
+            </div>
+        </div>
+
+        <div class="sb">
+            <div class="cu"><i class="fas fa-circle-radiation"></i> CRISE H5N1: Transmissao H2H sustentada confirmada em Indonesia (R0 1.3). OMS declarou PHEIC.</div>
+            <div class="dp np"><div class="dph"><h3><i class="fas fa-virus" style="color:var(--noro)"></i> NOROVIRUS</h3><span class="dpb bsn">GII.4</span></div><div class="dc" id="dNoro"><div class="pt">Selecione evento NORO na tabela.</div></div></div>
+            <div class="dp hp"><div class="dph"><h3><i class="fas fa-lungs" style="color:var(--hanta)"></i> HANTAVIRUS</h3><span class="dpb bsh">ANDV/SEOV</span></div><div class="dc" id="dHanta"><div class="pt">Selecione evento HANTA na tabela.</div></div></div>
+            <div class="dp ep"><div class="dph"><h3><i class="fas fa-biohazard" style="color:var(--ebola)"></i> EBOLA</h3><span class="dpb bse">EBOV/SUDV</span></div><div class="dc" id="dEbola"><div class="pt">Selecione evento EBOLA na tabela.</div></div></div>
+            <div class="dp 5p"><div class="dph"><h3><i class="fas fa-crow" style="color:var(--h5n1)"></i> INFLUENZA H5N1</h3><span class="dpb bs5">HPAI</span></div><div class="dc" id="dH5n1"><div class="pt">Selecione evento H5N1 na tabela.</div></div></div>
+            <div class="nt">Modelo Dr/Obscuros v4.2 · SIGMA · 18/05/2026 03:12 UTC<br>Delta = variacao vs. 14MAI2026</div>
+        </div>
+    </div>
+
+    <div class="stm">CLASSIFICADO · Dr/Obscuros</div>
 
     <script>
-        // ==================== DADOS NOROVIRUS ====================
-        const noroEvents = [
-            { name: 'Caribbean Princess (Atlantico)', icon: '<i class="fas fa-ship"></i>', pathogen: 'noro',
-                factors: { transmissibilidade: 0.99, cfr: 0.011, conectividade: 0.85, contencao: 0.25, reservatorio: 0.05, mutacoes: 0.82, doseInfectante: 0.98, incubacaoAssint: 0.85 },
-                desc: '187 infectados, 2 obitos. Resistencia a hipoclorito confirmada. Cepa GII.4 recombinante com escape de desinfeccao padrao. Ambiente confinado com R0 > 12.',
-                casos: '187 (2 obitos)' },
-            { name: 'Japao (Toquio)', icon: '<i class="fas fa-torii-gate"></i>', pathogen: 'noro',
-                factors: { transmissibilidade: 0.92, cfr: 0.002, conectividade: 0.92, contencao: 0.55, reservatorio: 0.05, mutacoes: 0.72, doseInfectante: 0.95, incubacaoAssint: 0.82 },
-                desc: '1.850 casos, 3 obitos infantis. Aceleracao de 45% em 10 dias. Escolas fechando.',
-                casos: '1.850 (3 obitos)' },
-            { name: 'Reino Unido (Londres)', icon: '<i class="fas fa-landmark"></i>', pathogen: 'noro',
-                factors: { transmissibilidade: 0.90, cfr: 0.006, conectividade: 0.88, contencao: 0.45, reservatorio: 0.05, mutacoes: 0.68, doseInfectante: 0.95, incubacaoAssint: 0.82 },
-                desc: '1.340 casos, 8 obitos. UKHSA declara incidente grave. Pico de inverno tardio.',
-                casos: '1.340 (8 obitos)' },
-            { name: 'EUA (Nova York)', icon: '<i class="fas fa-building"></i>', pathogen: 'noro',
-                factors: { transmissibilidade: 0.88, cfr: 0.010, conectividade: 0.82, contencao: 0.50, reservatorio: 0.05, mutacoes: 0.65, doseInfectante: 0.95, incubacaoAssint: 0.80 },
-                desc: '590 casos, 6 obitos em lares de idosos. CDC revisa protocolo de alcool gel.',
-                casos: '590 (6 obitos)' },
-            { name: 'India (Mumbai)', icon: '<i class="fas fa-om"></i>', pathogen: 'noro',
-                factors: { transmissibilidade: 0.78, cfr: 0.001, conectividade: 0.55, contencao: 0.25, reservatorio: 0.10, mutacoes: 0.55, doseInfectante: 0.90, incubacaoAssint: 0.75 },
-                desc: 'Estimados 35.000 casos, 28 obitos infantis. Subnotificacao cronica.',
-                casos: '~35.000 (28 obitos)' }
-        ];
+    // ==================== EXECUCAO SEGURA ====================
+    try {
 
-        // ==================== DADOS HANTAVIRUS ====================
-        const hantaEvents = [
-            { name: 'MV Hondius (Crise Global)', icon: '<i class="fas fa-triangle-exclamation"></i>', pathogen: 'hanta',
-                factors: { transmissibilidade: 0.55, cfr: 0.42, conectividade: 0.99, contencao: 0.05, reservatorio: 0.20, mutacoes: 0.35, doseInfectante: 0.70, incubacaoAssint: 0.60 },
-                desc: 'CRISE GLOBAL. Casos em 5 paises. Transmissao local confirmada. Contencao falhou.',
-                casos: '27 (9 obitos)' },
-            { name: 'Espanha (Tenerife)', icon: '<i class="fas fa-sun"></i>', pathogen: 'hanta',
-                factors: { transmissibilidade: 0.55, cfr: 0.42, conectividade: 0.85, contencao: 0.30, reservatorio: 0.10, mutacoes: 0.28, doseInfectante: 0.65, incubacaoAssint: 0.55 },
-                desc: '12 casos, 4 obitos. Suspeita de transmissao hospitalar. Centenas em quarentena.',
-                casos: '12 (4 obitos)' },
-            { name: 'Argentina (Nacional)', icon: '<i class="fas fa-mountain-sun"></i>', pathogen: 'hanta',
-                factors: { transmissibilidade: 0.40, cfr: 0.34, conectividade: 0.55, contencao: 0.40, reservatorio: 0.25, mutacoes: 0.20, doseInfectante: 0.55, incubacaoAssint: 0.50 },
-                desc: '58 casos, 20 obitos. Foco endemico. Origem da cepa global.',
-                casos: '58 (20 obitos)' },
-            { name: 'EUA (Nebraska)', icon: '<i class="fas fa-wheat-awn"></i>', pathogen: 'hanta',
-                factors: { transmissibilidade: 0.48, cfr: 0.36, conectividade: 0.82, contencao: 0.55, reservatorio: 0.08, mutacoes: 0.22, doseInfectante: 0.60, incubacaoAssint: 0.52 },
-                desc: '3 casos, 1 obito. Transmissao secundaria confirmada em solo americano.',
-                casos: '3 (1 obito)' }
-        ];
+    // ===== DADOS =====
+    var noroData = [
+        {n:'Caribbean Princess',ic:'<i class="fas fa-ship"></i>',p:'noro',nw:false,dl:'-1.2',
+         f:{t:.95,c:.011,k:.80,ct:.35,r:.05,m:.82,d:.98,i:.85},
+         ds:'Contencao parcial. Navio em quarentena rigida. 187 infectados, 2 obitos.',cs:'187 (2 obitos)'},
+        {n:'Japao (Toquio)',ic:'<i class="fas fa-torii-gate"></i>',p:'noro',nw:false,dl:'-5.8',
+         f:{t:.82,c:.002,k:.92,ct:.70,r:.05,m:.72,d:.95,i:.82},
+         ds:'CONTENCAO SIGNIFICATIVA. Casos cairam 40%. Escolas reabriram.',cs:'1850 (3 obitos)'},
+        {n:'India (Mumbai)',ic:'<i class="fas fa-om"></i>',p:'noro',nw:false,dl:'+3.1',
+         f:{t:.85,c:.001,k:.55,ct:.18,r:.10,m:.60,d:.92,i:.80},
+         ds:'PIORANDO. Estimados 52.000 casos, 35 obitos infantis. Moncao agravando.',cs:'52000 (35 obitos)'},
+        {n:'Brasil (Manaus)',ic:'<i class="fas fa-leaf"></i>',p:'noro',nw:true,dl:'NEW',
+         f:{t:.88,c:.003,k:.50,ct:.20,r:.08,m:.75,d:.95,i:.82},
+         ds:'NOVO FOCO. 890 casos em comunidades ribeirinhas. Cepa GII.4 recombinante.',cs:'890 (2 obitos)'}
+    ];
 
-        // ==================== DADOS EBOLA ====================
-        const ebolaEvents = [
-            { name: 'RD Congo (Nord-Kivu)', icon: '<i class="fas fa-skull-crossbones"></i>', pathogen: 'ebola',
-                factors: { transmissibilidade: 0.52, cfr: 0.67, conectividade: 0.45, contencao: 0.10, reservatorio: 0.85, mutacoes: 0.38, doseInfectante: 0.75, incubacaoAssint: 0.45 },
-                desc: 'CRISE EM CURSO. 312 casos, 209 obitos (CFR 67%). Mutacao GP-A82V. Zona de conflito armado.',
-                casos: '312 (209 obitos)' },
-            { name: 'Uganda (Kampala)', icon: '<i class="fas fa-circle-radiation"></i>', pathogen: 'ebola',
-                factors: { transmissibilidade: 0.48, cfr: 0.55, conectividade: 0.60, contencao: 0.20, reservatorio: 0.70, mutacoes: 0.32, doseInfectante: 0.72, incubacaoAssint: 0.42 },
-                desc: '87 casos, 48 obitos. Cepa Sudan (SUDV) sem vacina aprovada. OMS declarou emergencia.',
-                casos: '87 (48 obitos)' },
-            { name: 'Guine (Conakry)', icon: '<i class="fas fa-virus"></i>', pathogen: 'ebola',
-                factors: { transmissibilidade: 0.42, cfr: 0.60, conectividade: 0.50, contencao: 0.18, reservatorio: 0.80, mutacoes: 0.28, doseInfectante: 0.68, incubacaoAssint: 0.40 },
-                desc: '24 casos, 14 obitos. Ressurgencia da cepa Zaire. Fronteiras sem controle.',
-                casos: '24 (14 obitos)' },
-            { name: 'Quenia (Nairobi)', icon: '<i class="fas fa-plane-departure"></i>', pathogen: 'ebola',
-                factors: { transmissibilidade: 0.35, cfr: 0.50, conectividade: 0.78, contencao: 0.45, reservatorio: 0.60, mutacoes: 0.15, doseInfectante: 0.60, incubacaoAssint: 0.35 },
-                desc: '3 casos importados do Uganda. Aeroporto JKIA e hub da Africa Oriental.',
-                casos: '3 (1 obito)' }
-        ];
+    var hantaData = [
+        {n:'MV Hondius (Crise)',ic:'<i class="fas fa-triangle-exclamation"></i>',p:'hanta',nw:false,dl:'+2.4',
+         f:{t:.58,c:.42,k:.99,ct:.05,r:.22,m:.38,d:.72,i:.62},
+         ds:'EXPANSAO. Casos em 7 paises. Italia e Alemanha adicionados.',cs:'34 (12 obitos)'},
+        {n:'Italia (Roma)',ic:'<i class="fas fa-monument"></i>',p:'hanta',nw:true,dl:'NEW',
+         f:{t:.52,c:.38,k:.94,ct:.35,r:.08,m:.28,d:.65,i:.55},
+         ds:'NOVO FOCO. 5 casos, 1 obito. Fiumicino hub europeu.',cs:'5 (1 obito)'},
+        {n:'Alemanha (Munique)',ic:'<i class="fas fa-industry"></i>',p:'hanta',nw:true,dl:'NEW',
+         f:{t:.48,c:.36,k:.90,ct:.50,r:.05,m:.25,d:.62,i:.52},
+         ds:'NOVO FOCO. 2 casos importados. Contencao ativa pelo RKI.',cs:'2 (0 obitos)'},
+        {n:'Espanha (Tenerife)',ic:'<i class="fas fa-sun"></i>',p:'hanta',nw:false,dl:'+1.8',
+         f:{t:.58,c:.42,k:.85,ct:.25,r:.12,m:.30,d:.68,i:.58},
+         ds:'PIORANDO. 18 casos, 7 obitos. Transmissao hospitalar.',cs:'18 (7 obitos)'},
+        {n:'Argentina',ic:'<i class="fas fa-mountain-sun"></i>',p:'hanta',nw:false,dl:'-0.5',
+         f:{t:.38,c:.34,k:.55,ct:.45,r:.25,m:.20,d:.55,i:.50},
+         ds:'ESTABILIZANDO. 62 casos, 21 obitos. Contencao melhorando.',cs:'62 (21 obitos)'},
+        {n:'Chile (Valdivia)',ic:'<i class="fas fa-tree"></i>',p:'hanta',nw:true,dl:'NEW',
+         f:{t:.35,c:.32,k:.50,ct:.40,r:.28,m:.18,d:.52,i:.48},
+         ds:'NOVO FOCO. 6 casos, 2 obitos. Cepa ANDV similar a Argentina.',cs:'6 (2 obitos)'}
+    ];
 
-        // ==================== DADOS H5N1 ====================
-        const h5n1Events = [
-            { name: 'Rotas Migratorias (Global)', icon: '<i class="fas fa-route"></i>', pathogen: 'h5n1',
-                factors: { transmissibilidade: 0.82, cfr: 0.52, conectividade: 0.99, contencao: 0.02, reservatorio: 0.98, mutacoes: 0.78, doseInfectante: 0.85, incubacaoAssint: 0.55 },
-                desc: 'RISCO SISTEMICO CRITICO. Dispersao incontrolavel por rotas de migracao de aves (Flyways). Reassortimento continuo com subtipos H1N1 e H3N2 em reservatorios de suinos. O reservatorio e planetario e incontido.',
-                casos: 'N/A (Fauna)' },
-            { name: 'EUA (Focos Bovinos - TX/MI)', icon: '<i class="fas fa-cow"></i>', pathogen: 'h5n1',
-                factors: { transmissibilidade: 0.35, cfr: 0.52, conectividade: 0.92, contencao: 0.35, reservatorio: 0.95, mutacoes: 0.72, doseInfectante: 0.68, incubacaoAssint: 0.38 },
-                desc: 'Salto de aves para bovinos confirmado. 48 trabalhadores infectados, 3 obitos. Mutacao PB2-E627K detectada, aumenta replicacao em mamiferos. Risco de reassortimento com influenza humana sazonal em granjas mistas.',
-                casos: '48 (3 obitos)' },
-            { name: 'China (Guangdong)', icon: '<i class="fas fa-store"></i>', pathogen: 'h5n1',
-                factors: { transmissibilidade: 0.40, cfr: 0.45, conectividade: 0.95, contencao: 0.30, reservatorio: 0.88, mutacoes: 0.75, doseInfectante: 0.72, incubacaoAssint: 0.42 },
-                desc: 'Cluster familiar em mercado vivo. Suspeita de transmissao limitada humano-a-humano. Cepa clade 2.3.4.4b com mutacao Q226L que favorece ligacao a receptores alfa-2,6 na via aerea superior humana.',
-                casos: '15 (6 obitos)' },
-            { name: 'Peru (Costa Pacifica)', icon: '<i class="fas fa-fish"></i>', pathogen: 'h5n1',
-                factors: { transmissibilidade: 0.22, cfr: 0.55, conectividade: 0.55, contencao: 0.40, reservatorio: 0.92, mutacoes: 0.60, doseInfectante: 0.62, incubacaoAssint: 0.35 },
-                desc: 'Mortandade massiva de leoes marinhos e pelicanos. Trabalhadores de pesca infectados. Mutacao D701N na PB2 detectada. Contato prolongado com fauna marinha infectada.',
-                casos: '8 (4 obitos)' },
-            { name: 'Vietna (Delta Mekong)', icon: '<i class="fas fa-dove"></i>', pathogen: 'h5n1',
-                factors: { transmissibilidade: 0.30, cfr: 0.50, conectividade: 0.60, contencao: 0.25, reservatorio: 0.95, mutacoes: 0.65, doseInfectante: 0.65, incubacaoAssint: 0.35 },
-                desc: 'Reassortimento H5N1 com H9N2 detectado em granjas de patos. Alta patogenicidade mantida em modelos ferret. Subnotificacao severa em areas rurais.',
-                casos: '22 (11 obitos)' },
-            { name: 'Egito (Vale do Nilo)', icon: '<i class="fas fa-wind"></i>', pathogen: 'h5n1',
-                factors: { transmissibilidade: 0.25, cfr: 0.42, conectividade: 0.50, contencao: 0.40, reservatorio: 0.80, mutacoes: 0.50, doseInfectante: 0.58, incubacaoAssint: 0.30 },
-                desc: 'Foco historico de H5N1. Casos esporadicos em criadores de aves. Mutacao N158D que facilita ligacao a celulas humanas detectada em amostras clinicas.',
-                casos: '5 (2 obitos)' },
-            { name: 'Reino Unido (Scotland)', icon: '<i class="fas fa-feather"></i>', pathogen: 'h5n1',
-                factors: { transmissibilidade: 0.15, cfr: 0.50, conectividade: 0.85, contencao: 0.70, reservatorio: 0.82, mutacoes: 0.35, doseInfectante: 0.50, incubacaoAssint: 0.25 },
-                desc: 'Infeccao em trabalhador de santuario de aves. Colapso de colonias de skua e gannet. Vigilancia genetica rigorosa. Nenhuma transmissao humano-humano.',
-                casos: '2 (1 obito)' },
-            { name: 'Espanha (Asturias - Furões)', icon: '<i class="fas fa-paw"></i>', pathogen: 'h5n1',
-                factors: { transmissibilidade: 0.38, cfr: 0.35, conectividade: 0.80, contencao: 0.50, reservatorio: 0.75, mutacoes: 0.55, doseInfectante: 0.60, incubacaoAssint: 0.40 },
-                desc: 'Surto em criacao de furões. Transmissao mamifero-mamifero confirmada pela OIE. Mutacao T271A na PB2. Primeira evidencia de adaptacao sustentada em mamiferos carnivores na Europa.',
-                casos: '0 (0 obitos humanos)' }
-        ];
+    var ebolaData = [
+        {n:'RD Congo (Nord-Kivu)',ic:'<i class="fas fa-skull-crossbones"></i>',p:'ebola',nw:false,dl:'+3.2',
+         f:{t:.55,c:.67,k:.48,ct:.08,r:.85,m:.42,d:.78,i:.48},
+         ds:'PIORANDO. 445 casos, 298 obitos (CFR 67%). Mutacao GP-A82V em expansao.',cs:'445 (298 obitos)'},
+        {n:'Uganda (Kampala)',ic:'<i class="fas fa-circle-radiation"></i>',p:'ebola',nw:false,dl:'+5.5',
+         f:{t:.52,c:.55,k:.62,ct:.15,r:.72,m:.35,d:.75,i:.45},
+         ds:'EXPANDINDO. 124 casos, 68 obitos. SUDV sem vacina.',cs:'124 (68 obitos)'},
+        {n:'Tanzania (Mwanza)',ic:'<i class="fas fa-water"></i>',p:'ebola',nw:true,dl:'NEW',
+         f:{t:.45,c:.52,k:.48,ct:.18,r:.65,m:.28,d:.68,i:.40},
+         ds:'NOVO FOCO. 9 casos, 4 obitos. Link com Uganda via Lago Victoria.',cs:'9 (4 obitos)'},
+        {n:'Guine (Conakry)',ic:'<i class="fas fa-virus"></i>',p:'ebola',nw:false,dl:'-1.0',
+         f:{t:.38,c:.60,k:.50,ct:.28,r:.80,m:.26,d:.65,i:.38},
+         ds:'LEVE MELHORA. 28 casos, 16 obitos. Vacina rVSV-ZEBOV em anel.',cs:'28 (16 obitos)'}
+    ];
 
-        // ==================== MODELO MATEMATICO ====================
-        const weights = {
-            transmissibilidade: 0.28, cfr: 0.05, conectividade: 0.22,
-            contencao: 0.15, reservatorio: 0.08, mutacoes: 0.10,
-            doseInfectante: 0.08, incubacaoAssint: 0.04
-        };
+    var h5n1Data = [
+        {n:'Indonesia (Java) CRISE',ic:'<i class="fas fa-circle-radiation"></i>',p:'h5n1',nw:true,dl:'NEW',
+         f:{t:.72,c:.48,k:.95,ct:.08,r:.95,m:.88,d:.90,i:.58},
+         ds:'CRISE MAXIMA. PRIMEIRA TRANSMISSAO H2H SUSTENTADA. 23 casos em 3 geracoes. R0=1.3. Mutacoes Q226L+PB2-E627K+D701N. OMS PHEIC.',cs:'23 (11 obitos)'},
+        {n:'Rotas Migratorias',ic:'<i class="fas fa-route"></i>',p:'h5n1',nw:false,dl:'+3.8',
+         f:{t:.85,c:.52,k:.99,ct:.02,r:.98,m:.82,d:.88,i:.58},
+         ds:'Reassortimento com cepa Indonesia detectado no Cazaquistao.',cs:'N/A (Fauna)'},
+        {n:'EUA (Focos Bovinos)',ic:'<i class="fas fa-cow"></i>',p:'h5n1',nw:false,dl:'+7.2',
+         f:{t:.42,c:.50,k:.92,ct:.30,r:.95,m:.78,d:.72,i:.42},
+         ds:'ESCALANDO. 112 trabalhadores, 8 obitos. PB2-E627K em 68% das amostras.',cs:'112 (8 obitos)'},
+        {n:'China (Guangdong)',ic:'<i class="fas fa-store"></i>',p:'h5n1',nw:false,dl:'+4.5',
+         f:{t:.52,c:.44,k:.95,ct:.22,r:.88,m:.80,d:.78,i:.48},
+         ds:'SEGUNDO CLUSTER H2H. 28 casos, 12 obitos. Q226L confirmada.',cs:'28 (12 obitos)'},
+        {n:'Egito (Vale do Nilo)',ic:'<i class="fas fa-wind"></i>',p:'h5n1',nw:false,dl:'+2.8',
+         f:{t:.35,c:.40,k:.55,ct:.35,r:.82,m:.55,d:.62,i:.32},
+         ds:'9 casos, 3 obitos. N158D em expansao.',cs:'9 (3 obitos)'},
+        {n:'Peru (Costa Pacifica)',ic:'<i class="fas fa-fish"></i>',p:'h5n1',nw:false,dl:'+1.5',
+         f:{t:.28,c:.55,k:.55,ct:.38,r:.92,m:.65,d:.65,i:.38},
+         ds:'12 casos, 6 obitos. D701N em leoes marinhos.',cs:'12 (6 obitos)'},
+        {n:'Vietna (Delta Mekong)',ic:'<i class="fas fa-dove"></i>',p:'h5n1',nw:false,dl:'+3.2',
+         f:{t:.38,c:.48,k:.62,ct:.22,r:.95,m:.72,d:.70,i:.40},
+         ds:'35 casos, 16 obitos. Reassortimento H5N1xH9N2.',cs:'35 (16 obitos)'},
+        {n:'Espanha (Asturias)',ic:'<i class="fas fa-paw"></i>',p:'h5n1',nw:false,dl:'+2.1',
+         f:{t:.45,c:.32,k:.80,ct:.45,r:.78,m:.60,d:.65,i:.42},
+         ds:'Transmissao mamifero-mamifero. T271A. Agora em visons na Galiza.',cs:'0 (0 obitos humanos)'},
+        {n:'India (Bengala Oc.)',ic:'<i class="fas fa-crow"></i>',p:'h5n1',nw:true,dl:'NEW',
+         f:{t:.42,c:.38,k:.72,ct:.18,r:.92,m:.68,d:.70,i:.40},
+         ds:'NOVO FOCO CRITICO. 18 casos, 6 obitos em criadores de aves. Fronteira Bangladesh.',cs:'18 (6 obitos)'},
+        {n:'Canada (British Col.)',ic:'<i class="fas fa-leaf"></i>',p:'h5n1',nw:true,dl:'NEW',
+         f:{t:.22,c:.45,k:.78,ct:.60,r:.85,m:.42,d:.55,i:.28},
+         ds:'NOVO FOCO. 4 casos em trabalhadores de perus. Sem mutacoes criticas. Boa contencao.',cs:'4 (1 obito)'}
+    ];
 
-        function calcularProbabilidade(factors, pathogen) {
-            let cfrAdjusted;
-            if (pathogen === 'noro') {
-                cfrAdjusted = factors.cfr * 0.1;
-            } else if (pathogen === 'ebola' || pathogen === 'h5n1') {
-                /* CFR alto penaliza dispersao inicial, mas H5N1 tem CFR que ameaca gravemente */
-                cfrAdjusted = factors.cfr > 0.6 ? (1 - factors.cfr) * 0.4 : factors.cfr * 0.25;
-            } else {
-                cfrAdjusted = factors.cfr > 0.3 ? (1 - factors.cfr) * 0.3 : factors.cfr * 0.5;
-            }
-            const score = Object.keys(weights).reduce((s, k) => {
-                const val = k === 'cfr' ? cfrAdjusted : k === 'contencao' ? 1 - factors[k] : factors[k];
-                return s + val * weights[k];
-            }, 0);
-            return Math.round((1 / (1 + Math.exp(-8 * (score - 0.45)))) * 1000) / 10;
+    // ===== MODELO =====
+    var W = {t:.28,c:.05,k:.22,ct:.15,r:.08,m:.10,d:.08,i:.04};
+
+    function calc(f, path) {
+        var cfrA;
+        if (path === 'noro') cfrA = f.c * 0.1;
+        else if (path === 'ebola' || path === 'h5n1') cfrA = f.c > 0.6 ? (1 - f.c) * 0.4 : f.c * 0.25;
+        else cfrA = f.c > 0.3 ? (1 - f.c) * 0.3 : f.c * 0.5;
+        var score = 0;
+        var keys = ['t','c','k','ct','r','m','d','i'];
+        for (var x = 0; x < keys.length; x++) {
+            var kk = keys[x];
+            var val = kk === 'c' ? cfrA : kk === 'ct' ? 1 - f[kk] : f[kk];
+            score += val * W[kk];
         }
+        return Math.round((1 / (1 + Math.exp(-8 * (score - 0.45)))) * 1000) / 10;
+    }
 
-        noroEvents.forEach(e => e.probability = calcularProbabilidade(e.factors, 'noro'));
-        hantaEvents.forEach(e => e.probability = calcularProbabilidade(e.factors, 'hanta'));
-        ebolaEvents.forEach(e => e.probability = calcularProbabilidade(e.factors, 'ebola'));
-        h5n1Events.forEach(e => e.probability = calcularProbabilidade(e.factors, 'h5n1'));
-
-        noroEvents.sort((a, b) => b.probability - a.probability);
-        hantaEvents.sort((a, b) => b.probability - a.probability);
-        ebolaEvents.sort((a, b) => b.probability - a.probability);
-        h5n1Events.sort((a, b) => b.probability - a.probability);
-
-        const allEvents = [...noroEvents, ...hantaEvents, ...ebolaEvents, ...h5n1Events].sort((a, b) => b.probability - a.probability);
-
-        function getRiskColor(pct, pathogen) {
-            if (pathogen === 'noro') return pct >= 80 ? '#00ff88' : pct >= 60 ? '#2ecc71' : '#1abc9c';
-            if (pathogen === 'hanta') return pct >= 80 ? '#ff0000' : pct >= 60 ? '#e63946' : '#f4a261';
-            if (pathogen === 'ebola') return pct >= 80 ? '#ff4400' : pct >= 60 ? '#ff8c00' : '#cc8800';
-            return pct >= 80 ? '#00ffff' : pct >= 60 ? '#00e5ff' : '#0099cc';
+    // Calcular probabilidades
+    function calcAll(arr, path) {
+        for (var x = 0; x < arr.length; x++) {
+            arr[x].prob = calc(arr[x].f, path);
         }
+        arr.sort(function(a, b) { return b.prob - a.prob; });
+    }
+    calcAll(noroData, 'noro');
+    calcAll(hantaData, 'hanta');
+    calcAll(ebolaData, 'ebola');
+    calcAll(h5n1Data, 'h5n1');
 
-        function getRiskLabel(pct) {
-            return pct >= 80 ? 'CRITICO' : pct >= 60 ? 'MUITO ALTO' : pct >= 35 ? 'ALTO' : 'MODERADO';
-        }
+    var all = [].concat(noroData, hantaData, ebolaData, h5n1Data);
+    all.sort(function(a, b) { return b.prob - a.prob; });
 
-        function getPillClass(pct) {
-            return pct >= 80 ? 'pill-critical' : pct >= 60 ? 'pill-high' : pct >= 35 ? 'pill-moderate' : 'pill-low';
-        }
+    // ===== HELPERS =====
+    function rcol(pct, path) {
+        if (path === 'noro') return pct >= 80 ? '#00ff88' : pct >= 60 ? '#2ecc71' : '#1abc9c';
+        if (path === 'hanta') return pct >= 80 ? '#ff0000' : pct >= 60 ? '#e63946' : '#f4a261';
+        if (path === 'ebola') return pct >= 80 ? '#ff4400' : pct >= 60 ? '#ff8c00' : '#cc8800';
+        return pct >= 80 ? '#00ffff' : pct >= 60 ? '#00e5ff' : '#0099cc';
+    }
+    function rlbl(pct) { return pct >= 80 ? 'CRITICO' : pct >= 60 ? 'MUITO ALTO' : pct >= 35 ? 'ALTO' : 'MODERADO'; }
+    function rpcl(pct) { return pct >= 80 ? 'pc' : pct >= 60 ? 'ph' : pct >= 35 ? 'pm' : 'pl'; }
+    function pbcl(path) { return path === 'noro' ? 'pn' : path === 'hanta' ? 'pha' : path === 'ebola' ? 'pe' : 'p5'; }
+    function pblb(path) { return path === 'noro' ? 'NORO' : path === 'hanta' ? 'HANTA' : path === 'ebola' ? 'EBOLA' : 'H5N1'; }
+    function selcl(path) { return path === 'noro' ? 'sn' : path === 'hanta' ? 'sh' : path === 'ebola' ? 'se' : 's5'; }
+    function detid(path) { return path === 'noro' ? 'dNoro' : path === 'hanta' ? 'dHanta' : path === 'ebola' ? 'dEbola' : 'dH5n1'; }
 
-        // ==================== RENDER TABLE ====================
-        const tbody = document.getElementById('riskTableBody');
-        allEvents.forEach((ev, idx) => {
-            const tr = document.createElement('tr');
-            tr.dataset.pathogen = ev.pathogen;
-            tr.dataset.eventName = ev.name;
-            const pathoClass = ev.pathogen === 'noro' ? 'pathogen-noro' : ev.pathogen === 'hanta' ? 'pathogen-hanta' : ev.pathogen === 'ebola' ? 'pathogen-ebola' : 'pathogen-h5n1';
-            const pathoLabel = ev.pathogen === 'noro' ? 'NORO' : ev.pathogen === 'hanta' ? 'HANTA' : ev.pathogen === 'ebola' ? 'EBOLA' : 'H5N1';
-            tr.innerHTML = `
-                <td style="color:var(--text-secondary);font-family:'Share Tech Mono',monospace;">${idx + 1}</td>
-                <td>${ev.icon} <strong>${ev.name}</strong></td>
-                <td><span class="pathogen-badge ${pathoClass}">${pathoLabel}</span></td>
-                <td>
-                    <div style="display:flex;align-items:center;gap:6px;">
-                        <div class="progress-bar-bg" style="width:60px;">
-                            <div class="progress-bar-fill" style="width:${ev.probability}%;background:${getRiskColor(ev.probability, ev.pathogen)};"></div>
-                        </div>
-                        <strong style="color:${getRiskColor(ev.probability, ev.pathogen)};font-family:'Share Tech Mono',monospace;">${ev.probability}%</strong>
-                    </div>
-                </td>
-                <td><span class="risk-level-pill ${getPillClass(ev.probability)}">${getRiskLabel(ev.probability)}</span></td>
-                <td style="color:var(--text-secondary);font-family:'Share Tech Mono',monospace;font-size:0.9em;">${ev.casos}</td>
-                <td style="color:var(--text-secondary);font-family:'Share Tech Mono',monospace;">${(ev.factors.cfr*100).toFixed(1)}%</td>
-            `;
-            tr.addEventListener('click', () => selectEvent(ev, tr));
-            tbody.appendChild(tr);
-        });
+    // ===== STATS NOS CARDS =====
+    function avg(arr) { var s = 0; for (var x = 0; x < arr.length; x++) s += arr[x].prob; return (s / arr.length).toFixed(1) + '%'; }
+    document.getElementById('vNoro').textContent = avg(noroData);
+    document.getElementById('vHanta').textContent = avg(hantaData);
+    document.getElementById('vEbola').textContent = avg(ebolaData);
+    document.getElementById('vH5n1').textContent = avg(h5n1Data);
 
-        // ==================== SELECT EVENT ====================
-        let selectedNoro = null, selectedHanta = null, selectedEbola = null, selectedH5n1 = null;
+    function extNum(str) {
+        if (!str || str.indexOf('N/A') >= 0) return 0;
+        var nums = str.match(/\d+/g);
+        return nums && nums.length > 0 ? parseInt(nums[0]) : 0;
+    }
+    var tCases = extNum(noroData.reduce(function(s,e){return s + extNum(e.cs) ? s + extNum(e.cs) : s;}, 0).toString())
+        ? 'err' : 'err';
+    // Recalculo seguro
+    var tN = 0; for(var x=0;x<noroData.length;x++) tN += extNum(noroData[x].cs);
+    var tH = 0; for(var x=0;x<hantaData.length;x++) tH += extNum(hantaData[x].cs);
+    var tE = 0; for(var x=0;x<ebolaData.length;x++) tE += extNum(ebolaData[x].cs);
+    var t5 = 0; for(var x=0;x<h5n1Data.length;x++) t5 += extNum(h5n1Data[x].cs);
+    var tAll = tN + tH + tE + t5;
+    document.getElementById('vTotal').textContent = tAll >= 1000 ? (tAll / 1000).toFixed(1) + 'K' : String(tAll);
 
-        function selectEvent(ev, tr) {
-            document.querySelectorAll(`tr[data-pathogen="${ev.pathogen}"]`).forEach(r => {
-                r.classList.remove('selected-noro', 'selected-hanta', 'selected-ebola', 'selected-h5n1');
-            });
-            const selClass = `selected-${ev.pathogen}`;
-            tr.classList.add(selClass);
+    // ===== TABELA =====
+    var tb = document.getElementById('tBody');
+    for (var x = 0; x < all.length; x++) {
+        (function(ev, idx) {
+            var tr = document.createElement('tr');
+            tr.dataset.pathogen = ev.p;
+            if (ev.nw) tr.classList.add('ne');
+            var dc = ev.dl === 'NEW' ? '#00e5ff' : ev.dl.charAt(0) === '+' ? '#ff4444' : '#2ecc71';
+            tr.innerHTML =
+                '<td style="color:var(--text-sec);font-family:\'Share Tech Mono\',monospace;">' + (idx + 1) + '</td>' +
+                '<td>' + ev.ic + ' <strong>' + ev.n + '</strong></td>' +
+                '<td><span class="pb ' + pbcl(ev.p) + '">' + pblb(ev.p) + '</span></td>' +
+                '<td><div style="display:flex;align-items:center;gap:5px;">' +
+                    '<div class="bbg" style="width:50px;"><div class="bfl" style="width:' + ev.prob + '%;background:' + rcol(ev.prob, ev.p) + ';"></div></div>' +
+                    '<strong style="color:' + rcol(ev.prob, ev.p) + ';font-family:\'Share Tech Mono\',monospace;">' + ev.prob + '%</strong>' +
+                '</div></td>' +
+                '<td><span class="rp ' + rpcl(ev.prob) + '">' + rlbl(ev.prob) + '</span></td>' +
+                '<td style="color:var(--text-sec);font-family:\'Share Tech Mono\',monospace;font-size:.85em;">' + ev.cs + '</td>' +
+                '<td style="color:var(--text-sec);font-family:\'Share Tech Mono\',monospace;">' + (ev.f.c * 100).toFixed(1) + '%</td>' +
+                '<td style="color:' + dc + ';font-family:\'Share Tech Mono\',monospace;font-size:.85em;font-weight:700;">' + ev.dl + '</td>';
+            tr.addEventListener('click', function() { selectEv(ev, tr); });
+            tb.appendChild(tr);
+        })(all[x], x);
+    }
 
-            if (ev.pathogen === 'noro') selectedNoro = ev;
-            else if (ev.pathogen === 'hanta') selectedHanta = ev;
-            else if (ev.pathogen === 'ebola') selectedEbola = ev;
-            else selectedH5n1 = ev;
+    // ===== SELECAO =====
+    var selN = null, selH = null, selE = null, sel5 = null;
 
-            updateDetailPanel(ev);
-            updateRadarChart();
-        }
+    function selectEv(ev, tr) {
+        var cls = selcl(ev.p);
+        var rows = document.querySelectorAll('tr[data-pathogen="' + ev.p + '"]');
+        for (var x = 0; x < rows.length; x++) { rows[x].classList.remove('sn','sh','se','s5'); }
+        tr.classList.add(cls);
+        if (ev.p === 'noro') selN = ev;
+        else if (ev.p === 'hanta') selH = ev;
+        else if (ev.p === 'ebola') selE = ev;
+        else sel5 = ev;
+        updatePanel(ev);
+        updateRadar();
+    }
 
-        function updateDetailPanel(ev) {
-            const contentId = ev.pathogen === 'noro' ? 'noroDetailContent' : ev.pathogen === 'hanta' ? 'hantaDetailContent' : ev.pathogen === 'ebola' ? 'ebolaDetailContent' : 'h5n1DetailContent';
-            const content = document.getElementById(contentId);
+    function updatePanel(ev) {
+        var el = document.getElementById(detid(ev.p));
+        var cfrCol = ev.f.c > 0.3 ? '#ff4444' : ev.f.c > 0.05 ? '#f4a261' : '#2ecc71';
+        var ctCol = ev.f.ct < 0.2 ? '#ff0000' : ev.f.ct < 0.4 ? '#f4a261' : '#2ecc71';
+        el.innerHTML =
+            '<h4>' + ev.ic + ' ' + ev.n + (ev.nw ? ' <span style="color:#ff4444;font-size:.8em;">[NOVO]</span>' : '') + '</h4>' +
+            '<div style="margin-bottom:3px;"><span class="rp ' + rpcl(ev.prob) + '">' + rlbl(ev.prob) + '</span>' +
+            '<span style="font-size:.5em;color:' + (ev.dl === 'NEW' ? '#00e5ff' : ev.dl.charAt(0) === '+' ? '#ff4444' : '#2ecc71') + ';margin-left:6px;font-family:\'Share Tech Mono\',monospace;">' + (ev.dl !== 'NEW' ? 'vs 14MAI: ' : '') + ev.dl + '</span></div>' +
+            '<div class="ds"><span class="sl">Probabilidade</span><span class="sv" style="color:' + rcol(ev.prob, ev.p) + ';">' + ev.prob + '%</span></div>' +
+            '<div class="ds"><span class="sl">Casos</span><span class="sv">' + ev.cs + '</span></div>' +
+            '<div class="ds"><span class="sl">Transmissibilidade</span><span class="sv">' + (ev.f.t * 100).toFixed(0) + '%</span></div>' +
+            '<div class="ds"><span class="sl">CFR</span><span class="sv" style="color:' + cfrCol + ';">' + (ev.f.c * 100).toFixed(1) + '%</span></div>' +
+            '<div class="ds"><span class="sl">Conectividade</span><span class="sv">' + (ev.f.k * 100).toFixed(0) + '%</span></div>' +
+            '<div class="ds"><span class="sl">Contencao</span><span class="sv" style="color:' + ctCol + ';">' + (ev.f.ct * 100).toFixed(0) + '%</span></div>' +
+            '<div class="ds"><span class="sl">Reservatorio</span><span class="sv">' + (ev.f.r * 100).toFixed(0) + '%</span></div>' +
+            '<div class="ed"><i class="fas fa-file-medical"></i> ' + ev.ds + '</div>' +
+            '<div class="ft">' +
+                '<span class="ftg"><i class="fas fa-dna"></i> Mut: ' + (ev.f.m * 100).toFixed(0) + '%</span>' +
+                '<span class="ftg"><i class="fas fa-vial"></i> Dose: ' + (ev.f.d * 100).toFixed(0) + '%</span>' +
+                '<span class="ftg"><i class="fas fa-clock"></i> Incub: ' + (ev.f.i * 100).toFixed(0) + '%</span>' +
+            '</div>';
+    }
 
-            content.innerHTML = `
-                <h4>${ev.icon} ${ev.name}</h4>
-                <div style="margin-bottom:4px;">
-                    <span class="risk-level-pill ${getPillClass(ev.probability)}">${getRiskLabel(ev.probability)}</span>
-                </div>
-                <div class="detail-stat"><span class="stat-label">Probabilidade</span><span class="stat-value" style="color:${getRiskColor(ev.probability, ev.pathogen)};">${ev.probability}%</span></div>
-                <div class="detail-stat"><span class="stat-label">Casos</span><span class="stat-value">${ev.casos}</span></div>
-                <div class="detail-stat"><span class="stat-label">Transmissibilidade</span><span class="stat-value">${(ev.factors.transmissibilidade*100).toFixed(0)}%</span></div>
-                <div class="detail-stat"><span class="stat-label">CFR</span><span class="stat-value" style="color:${ev.factors.cfr > 0.3 ? '#ff4444' : ev.factors.cfr > 0.05 ? '#f4a261' : '#2ecc71'};">${(ev.factors.cfr*100).toFixed(1)}%</span></div>
-                <div class="detail-stat"><span class="stat-label">Conectividade</span><span class="stat-value">${(ev.factors.conectividade*100).toFixed(0)}%</span></div>
-                <div class="detail-stat"><span class="stat-label">Contencao</span><span class="stat-value" style="color:${ev.factors.contencao < 0.3 ? '#ff4444' : '#2ecc71'};">${(ev.factors.contencao*100).toFixed(0)}%</span></div>
-                <div class="detail-stat"><span class="stat-label">Reservatorio</span><span class="stat-value">${(ev.factors.reservatorio*100).toFixed(0)}%</span></div>
-                <div class="event-desc"><i class="fas fa-file-medical"></i> ${ev.desc}</div>
-                <div class="factors">
-                    <span class="factor-tag"><i class="fas fa-dna"></i> Mutacao: ${(ev.factors.mutacoes*100).toFixed(0)}%</span>
-                    <span class="factor-tag"><i class="fas fa-vial"></i> Dose: ${(ev.factors.doseInfectante*100).toFixed(0)}%</span>
-                    <span class="factor-tag"><i class="fas fa-clock"></i> Incubacao: ${(ev.factors.incubacaoAssint*100).toFixed(0)}%</span>
-                </div>
-            `;
-        }
-
-        // ==================== CHARTS ====================
-        function createBarChart(canvasId, events, pathogen) {
-            const ctx = document.getElementById(canvasId).getContext('2d');
-            return new Chart(ctx, {
-                type: 'bar',
-                data: {
-                    labels: events.map(e => e.name.split('(')[0].trim().substring(0, 14)),
-                    datasets: [{
-                        data: events.map(e => e.probability),
-                        backgroundColor: events.map(e => getRiskColor(e.probability, pathogen) + '77'),
-                        borderColor: events.map(e => getRiskColor(e.probability, pathogen)),
-                        borderWidth: 2,
-                        borderRadius: 6,
-                        borderSkipped: false,
-                        barThickness: 16,
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    indexAxis: 'y',
-                    plugins: {
-                        legend: { display: false },
-                        tooltip: {
-                            backgroundColor: '#111820',
-                            borderColor: '#1e2a38',
-                            borderWidth: 1,
-                            titleColor: '#fff',
-                            bodyColor: '#c8d6e5',
-                            callbacks: { label: (ctx) => `${ctx.raw}% · ${getRiskLabel(ctx.raw)}` }
-                        }
-                    },
-                    scales: {
-                        x: {
-                            beginAtZero: true, max: 100,
-                            ticks: { color: '#8395a7', callback: v => v + '%', font: { size: 8 } },
-                            grid: { color: '#1e2a3822' }
-                        },
-                        y: {
-                            ticks: { color: '#c8d6e5', font: { size: 8 }, padding: 2 },
-                            grid: { display: false }
-                        }
-                    }
+    // ===== CHARTS =====
+    function mkChart(cid, arr, path) {
+        var ctx = document.getElementById(cid);
+        if (!ctx) return null;
+        return new Chart(ctx.getContext('2d'), {
+            type: 'bar',
+            data: {
+                labels: arr.map(function(e) { return e.n.substring(0, 14); }),
+                datasets: [{
+                    data: arr.map(function(e) { return e.prob; }),
+                    backgroundColor: arr.map(function(e) { return rcol(e.prob, path) + '66'; }),
+                    borderColor: arr.map(function(e) { return rcol(e.prob, path); }),
+                    borderWidth: 2, borderRadius: 5, borderSkipped: false, barThickness: 14,
+                }]
+            },
+            options: {
+                responsive: true, maintainAspectRatio: false, indexAxis: 'y',
+                plugins: { legend: { display: false }, tooltip: {
+                    backgroundColor: '#111820', borderColor: '#1e2a38', borderWidth: 1,
+                    titleColor: '#fff', bodyColor: '#c8d6e5',
+                    callbacks: { label: function(ctx) { return ctx.raw + '% · ' + rlbl(ctx.raw); } }
+                }},
+                scales: {
+                    x: { beginAtZero: true, max: 100, ticks: { color: '#8395a7', callback: function(v) { return v + '%'; }, font: { size: 7 } }, grid: { color: '#1e2a3822' } },
+                    y: { ticks: { color: '#c8d6e5', font: { size: 7 }, padding: 2 }, grid: { display: false } }
                 }
-            });
-        }
+            }
+        });
+    }
 
-        createBarChart('noroChart', noroEvents, 'noro');
-        createBarChart('hantaChart', hantaEvents, 'hanta');
-        createBarChart('ebolaChart', ebolaEvents, 'ebola');
-        createBarChart('h5n1Chart', h5n1Events, 'h5n1');
+    mkChart('cNoro', noroData, 'noro');
+    mkChart('cHanta', hantaData, 'hanta');
+    mkChart('cEbola', ebolaData, 'ebola');
+    mkChart('cH5n1', h5n1Data, 'h5n1');
 
-        // ==================== RADAR CHART QUADRUPLO ====================
-        const radarCtx = document.getElementById('radarChart').getContext('2d');
-        let radarChart = new Chart(radarCtx, {
+    // ===== RADAR =====
+    var rCtx = document.getElementById('cRadar');
+    var rChart = null;
+    if (rCtx) {
+        rChart = new Chart(rCtx.getContext('2d'), {
             type: 'radar',
             data: {
-                labels: ['Transmissao', 'CFR', 'Conectividade', 'Baixa Contencao', 'Reservatorio', 'Mutacoes', 'Dose Infectante', 'Incubacao'],
+                labels: ['Transmissao','CFR','Conectividade','Baixa Contencao','Reservatorio','Mutacoes','Dose Infectante','Incubacao'],
                 datasets: [
-                    { label: 'Norovirus (selecione)', data: [0,0,0,0,0,0,0,0],
-                      backgroundColor: '#2ecc7112', borderColor: '#2ecc71', borderWidth: 2, pointRadius: 3, pointBackgroundColor: '#2ecc71' },
-                    { label: 'Hantavirus (selecione)', data: [0,0,0,0,0,0,0,0],
-                      backgroundColor: '#ff444412', borderColor: '#ff4444', borderWidth: 2, pointRadius: 3, pointBackgroundColor: '#ff4444' },
-                    { label: 'Ebola (selecione)', data: [0,0,0,0,0,0,0,0],
-                      backgroundColor: '#ff8c0012', borderColor: '#ff8c00', borderWidth: 2, pointRadius: 3, pointBackgroundColor: '#ff8c00' },
-                    { label: 'H5N1 (selecione)', data: [0,0,0,0,0,0,0,0],
-                      backgroundColor: '#00e5ff12', borderColor: '#00e5ff', borderWidth: 2, pointRadius: 3, pointBackgroundColor: '#00e5ff' }
+                    {label:'Norovirus (selecione)',data:[0,0,0,0,0,0,0,0],backgroundColor:'#2ecc7110',borderColor:'#2ecc71',borderWidth:2,pointRadius:3,pointBackgroundColor:'#2ecc71'},
+                    {label:'Hantavirus (selecione)',data:[0,0,0,0,0,0,0,0],backgroundColor:'#ff444410',borderColor:'#ff4444',borderWidth:2,pointRadius:3,pointBackgroundColor:'#ff4444'},
+                    {label:'Ebola (selecione)',data:[0,0,0,0,0,0,0,0],backgroundColor:'#ff8c0010',borderColor:'#ff8c00',borderWidth:2,pointRadius:3,pointBackgroundColor:'#ff8c00'},
+                    {label:'H5N1 (selecione)',data:[0,0,0,0,0,0,0,0],backgroundColor:'#00e5ff10',borderColor:'#00e5ff',borderWidth:2,pointRadius:3,pointBackgroundColor:'#00e5ff'}
                 ]
             },
             options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                scales: {
-                    r: {
-                        beginAtZero: true, max: 100,
-                        ticks: { color: '#8395a7', backdropColor: 'transparent', font: { size: 8 } },
-                        grid: { color: '#1e2a3844' },
-                        pointLabels: { color: '#c8d6e5', font: { size: 8 } }
-                    }
-                },
-                plugins: {
-                    legend: { labels: { color: '#c8d6e5', font: { size: 9 }, usePointStyle: true, pointStyleWidth: 8 } }
-                }
+                responsive: true, maintainAspectRatio: false,
+                scales: { r: { beginAtZero: true, max: 100, ticks: { color: '#8395a7', backdropColor: 'transparent', font: { size: 7 } }, grid: { color: '#1e2a3844' }, pointLabels: { color: '#c8d6e5', font: { size: 8 } } } },
+                plugins: { legend: { labels: { color: '#c8d6e5', font: { size: 8 }, usePointStyle: true, pointStyleWidth: 6 } } }
             }
         });
+    }
 
-        function factorsToRadar(f) {
-            return [
-                f.transmissibilidade * 100, f.cfr * 100,
-                f.conectividade * 100, (1 - f.contencao) * 100,
-                f.reservatorio * 100, f.mutacoes * 100,
-                f.doseInfectante * 100, f.incubacaoAssint * 100
-            ];
-        }
+    function f2r(f) {
+        return [f.t*100, f.c*100, f.k*100, (1-f.ct)*100, f.r*100, f.m*100, f.d*100, f.i*100];
+    }
 
-        function updateRadarChart() {
-            const ds = radarChart.data.datasets;
-            ds[0].data = selectedNoro ? factorsToRadar(selectedNoro.factors) : [0,0,0,0,0,0,0,0];
-            ds[0].label = selectedNoro ? 'Norovirus: ' + selectedNoro.name.split('(')[0].trim() : 'Norovirus (selecione)';
-            ds[1].data = selectedHanta ? factorsToRadar(selectedHanta.factors) : [0,0,0,0,0,0,0,0];
-            ds[1].label = selectedHanta ? 'Hantavirus: ' + selectedHanta.name.split('(')[0].trim() : 'Hantavirus (selecione)';
-            ds[2].data = selectedEbola ? factorsToRadar(selectedEbola.factors) : [0,0,0,0,0,0,0,0];
-            ds[2].label = selectedEbola ? 'Ebola: ' + selectedEbola.name.split('(')[0].trim() : 'Ebola (selecione)';
-            ds[3].data = selectedH5n1 ? factorsToRadar(selectedH5n1.factors) : [0,0,0,0,0,0,0,0];
-            ds[3].label = selectedH5n1 ? 'H5N1: ' + selectedH5n1.name.split('(')[0].trim() : 'H5N1 (selecione)';
-            radarChart.update();
-        }
+    function updateRadar() {
+        if (!rChart) return;
+        var ds = rChart.data.datasets;
+        ds[0].data = selN ? f2r(selN.f) : [0,0,0,0,0,0,0,0];
+        ds[0].label = selN ? 'Norovirus: ' + selN.n.substring(0,12) : 'Norovirus (selecione)';
+        ds[1].data = selH ? f2r(selH.f) : [0,0,0,0,0,0,0,0];
+        ds[1].label = selH ? 'Hantavirus: ' + selH.n.substring(0,12) : 'Hantavirus (selecione)';
+        ds[2].data = selE ? f2r(selE.f) : [0,0,0,0,0,0,0,0];
+        ds[2].label = selE ? 'Ebola: ' + selE.n.substring(0,12) : 'Ebola (selecione)';
+        ds[3].data = sel5 ? f2r(sel5.f) : [0,0,0,0,0,0,0,0];
+        ds[3].label = sel5 ? 'H5N1: ' + sel5.n.substring(0,12) : 'H5N1 (selecione)';
+        rChart.update();
+    }
 
-        // ==================== STATS ====================
-        document.getElementById('noroAvgRisk').textContent = (noroEvents.reduce((s, e) => s + e.probability, 0) / noroEvents.length).toFixed(1) + '%';
-        document.getElementById('hantaAvgRisk').textContent = (hantaEvents.reduce((s, e) => s + e.probability, 0) / hantaEvents.length).toFixed(1) + '%';
-        document.getElementById('ebolaAvgRisk').textContent = (ebolaEvents.reduce((s, e) => s + e.probability, 0) / ebolaEvents.length).toFixed(1) + '%';
-        document.getElementById('h5n1AvgRisk').textContent = (h5n1Events.reduce((s, e) => s + e.probability, 0) / h5n1Events.length).toFixed(1) + '%';
+    // ===== AUTO-SELECT =====
+    setTimeout(function() {
+        var r1 = document.querySelector('tr[data-pathogen="noro"]');
+        var r2 = document.querySelector('tr[data-pathogen="hanta"]');
+        var r3 = document.querySelector('tr[data-pathogen="ebola"]');
+        var r4 = document.querySelector('tr[data-pathogen="h5n1"]');
+        if (r1) r1.click();
+        if (r2) r2.click();
+        if (r3) r3.click();
+        if (r4) r4.click();
+    }, 400);
 
-        function extractCases(str) {
-            if (str.includes('N/A')) return 0;
-            const match = str.match(/[\d.,]+/);
-            return match ? parseInt(match[0].replace(/[.,]/g, '')) : 0;
-        }
-        const totalAll = noroEvents.reduce((s, e) => s + extractCases(e.casos), 0) +
-                         hantaEvents.reduce((s, e) => s + extractCases(e.casos), 0) +
-                         ebolaEvents.reduce((s, e) => s + extractCases(e.casos), 0) +
-                         h5n1Events.reduce((s, e) => s + extractCases(e.casos), 0);
-        document.getElementById('totalCases').textContent = totalAll >= 1000 ? (totalAll / 1000).toFixed(1) + 'K' : totalAll;
-
-        // ==================== AUTO-SELECT ====================
-        setTimeout(() => {
-            document.querySelector('tr[data-pathogen="noro"]')?.click();
-            document.querySelector('tr[data-pathogen="hanta"]')?.click();
-            document.querySelector('tr[data-pathogen="ebola"]')?.click();
-            document.querySelector('tr[data-pathogen="h5n1"]')?.click();
-        }, 300);
+    } catch(err) {
+        // Se der erro, mostrar no painel
+        document.getElementById('vTotal').textContent = 'ERRO: ' + err.message;
+        console.error('Dr/Obscuros Dashboard Error:', err);
+    }
     </script>
 </body>
 </html>
